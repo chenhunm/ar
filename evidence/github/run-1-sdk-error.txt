@@ -1,0 +1,6 @@
+2026-10-28T02:08:24.1981740Z Version: 20261021.618
+2026-10-28T02:08:24.1987521Z Image: ubuntu-26.04
+2026-10-28T02:08:24.1987857Z Version: 20261025.179.1
+2026-10-28T02:08:36.9401892Z [command]/usr/local/lib/android/sdk/cmdline-tools/16.0/bin/sdkmanager tools
+2026-10-28T02:08:38.3239040Z Warning: Failed to find package 'tools'
+2026-10-28T02:08:38.3420044Z Error: The process '/usr/local/lib/android/sdk/cmdline-tools/16.0/bin/sdkmanager' failed with exit code 1

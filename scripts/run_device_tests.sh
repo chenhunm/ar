@@ -13,6 +13,9 @@ collect_evidence() {
   "$adb_bin" shell dumpsys gfxinfo com.huanban.ar > evidence/device/gfxinfo.txt 2>&1 || true
   "$adb_bin" shell dumpsys activity lastanr > evidence/device/lastanr.txt 2>&1 || true
   "$adb_bin" exec-out screencap -p > evidence/device/final-screen.png 2>/dev/null || true
+  # Native PixelCopy captures and measurements live in the debug app's private
+  # files directory, not its external-files directory. run-as is debug-only.
+  "$adb_bin" exec-out run-as com.huanban.ar tar -cf - files > evidence/device/app-private-files.tar 2> evidence/device/private-pull.txt || true
   "$adb_bin" pull /sdcard/Android/data/com.huanban.ar/files evidence/device/app-files > evidence/device/pull.txt 2>&1 || true
   "$adb_bin" pull /sdcard/Pictures/HuanBanAR evidence/device/pictures >> evidence/device/pull.txt 2>&1 || true
   "$adb_bin" pull /sdcard/Movies/HuanBanAR evidence/device/movies >> evidence/device/pull.txt 2>&1 || true
