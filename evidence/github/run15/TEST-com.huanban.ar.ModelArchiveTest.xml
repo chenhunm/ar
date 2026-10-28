@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.huanban.ar.ModelArchiveTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-28T17:04:18" hostname="runnervm48cm3" time="0.069">
+  <properties/>
+  <testcase name="traversalCannotWriteOutsideExtractionRoot" classname="com.huanban.ar.ModelArchiveTest" time="0.03"/>
+  <testcase name="duplicateFilesAreRejected" classname="com.huanban.ar.ModelArchiveTest" time="0.007"/>
+  <testcase name="unknownPackageIsNotReportedAsSuccessfulImport" classname="com.huanban.ar.ModelArchiveTest" time="0.022"/>
+  <testcase name="unicodeResourcesRetainRelativePaths" classname="com.huanban.ar.ModelArchiveTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
