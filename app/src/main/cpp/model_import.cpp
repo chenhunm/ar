@@ -13,6 +13,7 @@
 class SandboxIO final : public Assimp::DefaultIOSystem {
     std::string root;
     std::string base;
+    bool writes;
     std::string resolve(const char* path) const {
         try {
             std::string name(path);std::replace(name.begin(),name.end(),'\\','/');
@@ -24,11 +25,11 @@ class SandboxIO final : public Assimp::DefaultIOSystem {
         } catch (...) { return std::string(); }
     }
 public:
-    SandboxIO(const std::string& directory,const std::string& source): root(std::filesystem::canonical(directory).string()+"/"), base(std::filesystem::path(source).parent_path().string()) {}
+    SandboxIO(const std::string& directory,const std::string& source,bool allowWrites=false): root(std::filesystem::canonical(directory).string()+"/"), base(std::filesystem::path(source).parent_path().string()), writes(allowWrites) {}
     bool Exists(const char* path) const override {const auto p=resolve(path);return !p.empty() && DefaultIOSystem::Exists(p.c_str());}
     Assimp::IOStream* Open(const char* path, const char* mode="rb") override {
         const auto p=resolve(path);
-        if (p.empty() || std::string(mode).find_first_of("wa+")!=std::string::npos) return nullptr;
+        if (p.empty() || (!writes && std::string(mode).find_first_of("wa+")!=std::string::npos)) return nullptr;
         return DefaultIOSystem::Open(p.c_str(),mode);
     }
 };
@@ -51,8 +52,10 @@ Java_com_huanban_ar_NativeModelCodec_convertNative(JNIEnv* env,jobject,jstring s
         for(unsigned i=0;i<scene->mNumMeshes;i++) vertices+=scene->mMeshes[i]->mNumVertices;
         if(vertices>750000 || scene->mNumMeshes>2048) throw std::runtime_error("Model exceeds geometry budget");
         Assimp::Exporter exporter;
+        exporter.SetIOHandler(new SandboxIO(directory,input,true));
         if(exporter.Export(scene,"glb2",output)!=AI_SUCCESS) throw std::runtime_error(exporter.GetErrorString());
         return nullptr;
     } catch(const std::exception& e) { return env->NewStringUTF(e.what()); }
     catch(...) { return env->NewStringUTF("Native model conversion failed"); }
 }
+

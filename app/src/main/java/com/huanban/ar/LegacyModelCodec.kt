@@ -153,6 +153,7 @@ object LegacyModelCodec {
                 for(i in 0 until count){
                     var sum=0f
                     repeat(4){k->val v=i*4+k;require(part.weights[v].isFinite()&&part.weights[v]>=0f);if(part.weights[v]==0f)part.joints[v]=0 else require(part.joints[v] in bones.indices);sum+=part.weights[v]}
+                    require(sum.isFinite()) { "骨骼权重总和超限" }
                     if(sum<.000001f){part.joints[i*4]=0;part.weights[i*4]=1f}else repeat(4){k->part.weights[i*4+k]/=sum}
                 }
                 val js=ByteBuffer.allocate(part.joints.size*2).order(ByteOrder.LITTLE_ENDIAN).apply{part.joints.forEach{putShort(it.toShort())}}.array()
@@ -192,3 +193,4 @@ object LegacyModelCodec {
         return ModelCodec.pack(j,data.toByteArray())
     }
 }
+

@@ -54,4 +54,13 @@ class LegacyModelCodecTest {
         assertEquals(1,ModelCodec.unpack(ModelCodec.convert(glb).bytes).first.getJSONArray("meshes").length())
         assertThrows(IllegalArgumentException::class.java){LegacyModelCodec.convert("bad.xps",bytes+byteArrayOf(0)){byteArrayOf()}}
     }
+    @Test fun overflowingSkinWeightsAreRejected() {
+        val lines=mutableListOf("1","root","-1","0 0 0","1","mesh","1","0","3")
+        repeat(3){i->lines+=listOf("${if(i==1)1 else 0} ${if(i==2)1 else 0} 0","0 0 1","255 255 255 255","0 0","0 0","3.4028235E38 3.4028235E38")}
+        lines+=listOf("1","0 1 2")
+        val exception=assertThrows(IllegalArgumentException::class.java){LegacyModelCodec.convert("overflow.ascii",lines.joinToString("\n").toByteArray()){error("No texture")}}
+        assertEquals("骨骼权重总和超限",exception.message)
+    }
+
 }
+

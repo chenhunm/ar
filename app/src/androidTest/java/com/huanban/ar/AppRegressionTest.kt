@@ -29,16 +29,24 @@ class AppRegressionTest {
     }
 
     private fun tap(text: String) {
-        var target: androidx.test.uiautomator.UiObject2? = null
-        val end=android.os.SystemClock.elapsedRealtime()+3000
-        while(target==null && android.os.SystemClock.elapsedRealtime()<end) {
-            target=device.findObject(By.text(text)) ?: device.findObject(By.desc(text))
-            if(target==null) Thread.sleep(100)
+        val start=android.os.SystemClock.elapsedRealtime()
+        val end=start+15000
+        var scrolled=false
+        while(android.os.SystemClock.elapsedRealtime()<end) {
+            try {
+                var target=device.findObject(By.text(text)) ?: device.findObject(By.desc(text))
+                if(target==null && !scrolled && android.os.SystemClock.elapsedRealtime()-start>3000) {
+                    scrolled=true
+                    target=device.findObject(By.scrollable(true))
+                        ?.scrollUntil(Direction.DOWN,Until.findObject(By.text(text)))
+                }
+                if(target!=null) { target.click(); return }
+            } catch (_: androidx.test.uiautomator.StaleObjectException) {
+                // The view was replaced between lookup and click. Reacquire the same selector.
+            }
+            Thread.sleep(100)
         }
-        if(target==null) target=device.findObject(By.scrollable(true))
-            ?.scrollUntil(Direction.DOWN,Until.findObject(By.text(text)))
-        assertNotNull("找不到 $text",target)
-        target!!.click()
+        fail("找不到或无法点击 $text")
     }
 
     private fun launch() {
@@ -450,3 +458,4 @@ class AppRegressionTest {
         assertEquals(("衣料"+92.toChar()+"/角色"),ModelCodec.unpack(bytes).first.getString("name"))
     }
 }
+
