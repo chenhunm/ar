@@ -435,40 +435,46 @@ object RigMotion {
         val meshes = j.getJSONArray("meshes")
         val ex = j.optJSONObject("extensions") ?: return
         val name = if (mode == "happy") "happy" else "blink"
-        val binds =
-            ex.optJSONObject("VRMC_vrm")
-                ?.optJSONObject("expressions")
-                ?.optJSONObject("preset")
-                ?.optJSONObject(name)
-                ?.optJSONArray("morphTargetBinds")
         val targets = mutableMapOf<Int, MutableMap<Int, Float>>()
-        if (binds != null)
-            for (i in 0 until binds.length()) {
-                val b = binds.getJSONObject(i)
-                targets.getOrPut(b.getInt("node")) { mutableMapOf() }[b.getInt("index")] =
-                    b.optDouble("weight", 1.0).toFloat()
-            }
-        val groups =
-            ex.optJSONObject("VRM")
-                ?.optJSONObject("blendShapeMaster")
-                ?.optJSONArray("blendShapeGroups")
-        if (groups != null)
-            for (i in 0 until groups.length()) {
-                val g = groups.getJSONObject(i)
-                if (
-                    g.optString("presetName") !in listOf(name, if (name == "happy") "joy" else name)
-                )
-                    continue
-                val bs = g.optJSONArray("binds") ?: continue
-                for (k in 0 until bs.length()) {
-                    val b = bs.getJSONObject(k)
-                    for (n in 0 until nodes.length()) if (
-                        nodes.getJSONObject(n).optInt("mesh", -1) == b.getInt("mesh")
-                    )
-                        targets.getOrPut(n) { mutableMapOf() }[b.getInt("index")] =
-                            b.optDouble("weight", 100.0).toFloat() / 100f
+        fun add(node: Int, index: Int, weight: Float) {
+            require(weight.isFinite()) { "VRM 表情权重不是有限数" }
+            val weights=targets.getOrPut(node) { mutableMapOf() }
+            weights[index]=max(weights[index] ?: 0f, weight)
+        }
+        fun preset1(names: List<String>) {
+            val preset=ex.optJSONObject("VRMC_vrm")?.optJSONObject("expressions")
+                ?.optJSONObject("preset") ?: return
+            for (presetName in names) {
+                val binds=preset.optJSONObject(presetName)?.optJSONArray("morphTargetBinds") ?: continue
+                for (i in 0 until binds.length()) {
+                    val b=binds.getJSONObject(i)
+                    add(b.getInt("node"), b.getInt("index"), b.optDouble("weight",1.0).toFloat())
                 }
             }
+        }
+        fun preset0(names: Set<String>) {
+            val groups=ex.optJSONObject("VRM")?.optJSONObject("blendShapeMaster")
+                ?.optJSONArray("blendShapeGroups") ?: return
+            for (i in 0 until groups.length()) {
+                val group=groups.getJSONObject(i)
+                if (group.optString("presetName").lowercase() !in names) continue
+                val binds=group.optJSONArray("binds") ?: continue
+                for (k in 0 until binds.length()) {
+                    val b=binds.getJSONObject(k)
+                    for (n in 0 until nodes.length())
+                        if (nodes.getJSONObject(n).optInt("mesh",-1)==b.getInt("mesh"))
+                            add(n,b.getInt("index"),b.optDouble("weight",100.0).toFloat()/100f)
+                }
+            }
+        }
+        preset1(listOf(name))
+        preset0(if (name=="happy") setOf("happy","joy") else setOf("blink"))
+        // Some valid avatars leave the combined preset empty and bind only
+        // individual eyes. Merge them into one weights channel per mesh.
+        if (mode=="blink" && targets.isEmpty()) {
+            preset1(listOf("blinkLeft","blinkRight"))
+            preset0(setOf("blink_l","blink_r"))
+        }
         for ((node, weights) in targets) {
             if (node !in 0 until nodes.length()) continue
             val mi = nodes.getJSONObject(node).optInt("mesh", -1)
