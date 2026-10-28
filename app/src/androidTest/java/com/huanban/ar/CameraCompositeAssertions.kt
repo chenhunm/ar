@@ -50,13 +50,9 @@ object CameraCompositeAssertions {
         val skinRatio get() = matchedSkin.toFloat() / skin.coerceAtLeast(1)
     }
 
-    fun screen(activity: StageActivity, name: String, expectCamera: Boolean = true): Result {
-        val screenshot = ins.uiAutomation.takeScreenshot() ?: error("无法读取最终显示画面")
-        try { return frame(activity, screenshot, name, expectCamera) }
-        finally { screenshot.recycle() }
-    }
+    private data class Sources(val model: Bitmap, val background: Bitmap, val location: IntArray)
 
-    fun frame(activity: StageActivity, image: Bitmap, name: String, expectCamera: Boolean = true): Result {
+    private fun sources(activity: StageActivity): Sources {
         val host = field(activity, "host") as RenderHost
         val location = IntArray(2)
         var camera: Bitmap? = null
@@ -68,15 +64,37 @@ object CameraCompositeAssertions {
         val model = Bitmap.createBitmap(host.view.width, host.view.height, Bitmap.Config.ARGB_8888)
         val done = CountDownLatch(1)
         var result = -1
-        ins.runOnMainSync {
-            FrameCapture.copy(host.view, model, { result = it; done.countDown() })
-        }
+        ins.runOnMainSync { FrameCapture.copy(host.view, model, { result = it; done.countDown() }) }
         try {
             assertTrue("三维画面读取超时", done.await(45, TimeUnit.SECONDS))
             assertEquals(PixelCopy.SUCCESS, result)
-            assertEquals("视频/截图应保持显示器尺寸", activity.window.decorView.display!!.let {
-                android.util.DisplayMetrics().also { metrics -> it.getRealMetrics(metrics) }.widthPixels
-            }, image.width)
+            return Sources(model, background, location)
+        } catch (error: Throwable) { model.recycle(); background.recycle(); throw error }
+    }
+
+    fun screen(activity: StageActivity, name: String, expectCamera: Boolean = true): Result {
+        // Read the queued 3D buffer first. A screenshot taken before PixelCopy
+        // can precede the first model frame after the system permission dialog.
+        val source = sources(activity)
+        val screenshot = ins.uiAutomation.takeScreenshot()
+        if (screenshot == null) {
+            source.model.recycle(); source.background.recycle(); error("无法读取最终显示画面")
+        }
+        try { return compare(activity, screenshot, name, expectCamera, source) }
+        finally { screenshot.recycle() }
+    }
+
+    fun frame(activity: StageActivity, image: Bitmap, name: String, expectCamera: Boolean = true): Result =
+        compare(activity, image, name, expectCamera, sources(activity))
+
+    private fun compare(activity: StageActivity, image: Bitmap, name: String, expectCamera: Boolean,
+        source: Sources): Result {
+        val (model, background, location) = source
+        try {
+            val bounds = activity.getSystemService(android.view.WindowManager::class.java)
+                .maximumWindowMetrics.bounds
+            assertEquals("视频/截图应保持显示器宽度", bounds.width(), image.width)
+            assertEquals("视频/截图应保持显示器高度，不能误用应用可用区域", bounds.height(), image.height)
             var candidates = 0
             var matches = 0
             var skin = 0

@@ -71,10 +71,14 @@ class RecordingService : Service() {
                 },
                 Handler(Looper.getMainLooper()),
             )
-            val dm = resources.displayMetrics
-            val ratio = minOf(1f, 1080f / dm.widthPixels)
-            val width = (dm.widthPixels * ratio).toInt() / 2 * 2
-            val height = (dm.heightPixels * ratio).toInt() / 2 * 2
+            // A fullscreen projection includes system bars. Application metrics
+            // exclude them on API 30 and produce an incorrectly scaled capture.
+            val bounds = getSystemService(android.view.WindowManager::class.java)
+                .maximumWindowMetrics.bounds
+            val density = resources.configuration.densityDpi
+            val ratio = minOf(1f, 1080f / bounds.width())
+            val width = (bounds.width() * ratio).toInt() / 2 * 2
+            val height = (bounds.height() * ratio).toInt() / 2 * 2
             val values =
                 ContentValues().apply {
                     put(
@@ -106,7 +110,7 @@ class RecordingService : Service() {
                     "HuanBan capture",
                     width,
                     height,
-                    dm.densityDpi,
+                    density,
                     DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                     rec.surface,
                     null,
