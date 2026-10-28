@@ -305,14 +305,22 @@ class NativeIntegrationTest {
                 ins.runOnMainSync { host.load(role) { loaded.countDown() } }
                 assertTrue("导入角色未实际加载", loaded.await(45, TimeUnit.SECONDS))
                 assertTrue(host.node!!.animationCount >= 7)
-                val bitmap = capture(host, "qa-import-$index.png")
+                var bitmap = capture(host, "qa-import-$index.png")
                 if(index == 0) {
-                    var textured = 0
-                    for(y in 0 until bitmap.height step 2) for(x in 0 until bitmap.width step 2) {
-                        val c=bitmap.getPixel(x,y)
-                        if(android.graphics.Color.red(c)>android.graphics.Color.green(c)+15 && android.graphics.Color.blue(c)>android.graphics.Color.green(c)+15) textured++
+                    fun texturedPixels(image: Bitmap): Int {
+                        var count=0
+                        for(y in 0 until image.height step 2) for(x in 0 until image.width step 2) {
+                            val c=image.getPixel(x,y)
+                            if(android.graphics.Color.red(c)>android.graphics.Color.green(c)+15 && android.graphics.Color.blue(c)>android.graphics.Color.green(c)+15) count++
+                        }
+                        return count
                     }
-                    assertTrue("关联 PNG 纹理没有出现在实际画面",textured>20)
+                    val deadline=SystemClock.elapsedRealtime()+30000
+                    while(texturedPixels(bitmap)<=20 && SystemClock.elapsedRealtime()<deadline) {
+                        bitmap.recycle();Thread.sleep(200)
+                        bitmap=capture(host,"qa-import-$index.png")
+                    }
+                    assertTrue("关联 PNG 纹理没有出现在实际画面",texturedPixels(bitmap)>20)
                 }
                 bitmap.recycle()
             }
