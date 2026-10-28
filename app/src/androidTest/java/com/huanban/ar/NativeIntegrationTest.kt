@@ -368,6 +368,20 @@ class NativeIntegrationTest {
             ins.runOnMainSync { repeat(3) { camera!!.stop(); camera.start() } }
             waitFor("快速暂停恢复后输出新的相机帧") { field(camera!!,"session") != null && texture.surfaceTexture!!.timestamp > oldTimestamp }
             sample("camera-fallback", field(ar, "host") as RenderHost)
+            CameraCompositeAssertions.freeze(ar)
+            CameraCompositeAssertions.screen(ar, "qa-camera-composite-portrait")
+            // Negative control: the former below-window surface ordering must
+            // fail the SAME final-display check despite both source buffers
+            // remaining valid. Restoring the production order must recover.
+            val cameraHost = field(ar, "host") as RenderHost
+            ins.runOnMainSync { cameraHost.view.setZOrderOnTop(false) }
+            Thread.sleep(600)
+            CameraCompositeAssertions.screen(ar, "qa-camera-composite-old-order", expectCamera = false)
+            ins.runOnMainSync { cameraHost.view.setZOrderOnTop(true) }
+            Thread.sleep(600)
+            CameraCompositeAssertions.screen(ar, "qa-camera-composite-restored")
+            ins.runOnMainSync { camera!!.start() }
+            waitFor("旋转前相机已恢复") { field(camera!!, "session") != null }
             ins.runOnMainSync {
                 val frame = texture.bitmap
                 assertNotNull("相机没有输出画面", frame)
@@ -388,6 +402,23 @@ class NativeIntegrationTest {
                     frame.recycle()
                 }
             }
+            CameraCompositeAssertions.freeze(ar)
+            CameraCompositeAssertions.screen(ar, "qa-camera-composite-landscape")
+            device.setOrientationNatural()
+            waitFor("相机合成竖屏布局恢复") {
+                ar.window.decorView.width < ar.window.decorView.height &&
+                    ar.windowManager.defaultDisplay.rotation == Surface.ROTATION_0
+            }
+            val timestampBeforeHome = texture.surfaceTexture!!.timestamp
+            device.pressHome()
+            waitFor("离开应用停止相机") { field(ar, "resumed") == false && field(camera!!, "session") == null }
+            context.startActivity(Intent(context, StageActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+            waitFor("后台返回后继续产生相机帧") {
+                field(camera!!, "session") != null && texture.surfaceTexture!!.timestamp > timestampBeforeHome
+            }
+            CameraCompositeAssertions.freeze(ar)
+            CameraCompositeAssertions.screen(ar, "qa-camera-composite-resumed")
         } finally {
             try {
                 device.setOrientationNatural()

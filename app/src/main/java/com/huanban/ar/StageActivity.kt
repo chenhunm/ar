@@ -290,6 +290,14 @@ class StageActivity : ComponentActivity() {
                         else "") + s
                 }
             host = h
+            if (cameraTexture != null) {
+                // TextureView belongs to the Activity window. A media-overlay
+                // SurfaceView stays behind that window and punches out its
+                // camera pixels. Composite transparent Filament ABOVE it.
+                // Set this before attaching the surface; controls are outside
+                // this viewport and dialogs use their own windows.
+                h.view.setZOrderOnTop(true)
+            }
             canvas.addView(h.view, FrameLayout.LayoutParams(-1, -1))
             h.onStats = { s -> status.contentDescription = s }
             if (realAr) {

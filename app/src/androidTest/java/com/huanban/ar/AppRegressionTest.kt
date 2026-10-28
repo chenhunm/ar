@@ -290,73 +290,88 @@ class AppRegressionTest {
 
     @Test
     fun j_videoRecordingCreatesDecodableFile() {
-        val startedAfter = System.currentTimeMillis()/1000
-        launch()
-        tap("舞蹈模式")
-        assertTrue(device.wait(Until.hasObject(By.textContains("ms")), 45000))
-        tap("录制视频")
-        if(android.os.Build.VERSION.SDK_INT >= 34) {
-            val modes=device.wait(Until.findObject(By.res(java.util.regex.Pattern.compile("com.android.systemui:id/screen_share_mode_(options|spinner)"))),10000)
-            assertNotNull("未出现录屏范围选择",modes);modes!!.click()
-            val entire=device.wait(Until.findObject(By.text(java.util.regex.Pattern.compile("(?i).*(entire screen|整个屏幕|整个画面).*"))),5000)
-            assertNotNull("未找到整个屏幕选项",entire);entire!!.click()
-        }
-        val approve = device.wait(Until.findObject(By.res("android:id/button1")), 15000)
-        assertNotNull("未出现系统录屏授权", approve)
-        approve!!.click()
-        val deadline = System.currentTimeMillis() + 20000
-        while (!RecordingService.running && System.currentTimeMillis() < deadline) Thread.sleep(250)
-        assertTrue(RecordingService.running)
-        Thread.sleep(3500)
-        context.stopService(Intent(context, RecordingService::class.java))
-        Thread.sleep(2500)
-        assertFalse(RecordingService.running)
-        val uri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-        val end = android.os.SystemClock.elapsedRealtime()+30000
-        var finalized = false
-        while (!finalized && android.os.SystemClock.elapsedRealtime()<end) {
-            context.contentResolver.query(uri,arrayOf("_size","is_pending"),"_display_name LIKE ? AND date_added >= ?",arrayOf("HuanBan_%",startedAfter.toString()),"date_added DESC")?.use { cursor ->
-                finalized = cursor.moveToFirst() && cursor.getLong(0)>1000 && cursor.getInt(1)==0
+        for (mode in listOf("dance", "ar")) {
+            val startedAfter = System.currentTimeMillis()/1000
+            launch()
+            if (mode == "ar") device.executeShellCommand("pm grant ${context.packageName} android.permission.CAMERA")
+            tap(if (mode == "ar") "AR 模式" else "舞蹈模式")
+            assertTrue(device.wait(Until.hasObject(By.textContains("ms")), 45000))
+            tap("录制视频")
+            if(android.os.Build.VERSION.SDK_INT >= 34) {
+                val modes=device.wait(Until.findObject(By.res(java.util.regex.Pattern.compile("com.android.systemui:id/screen_share_mode_(options|spinner)"))),10000)
+                assertNotNull("未出现录屏范围选择",modes);modes!!.click()
+                val entire=device.wait(Until.findObject(By.text(java.util.regex.Pattern.compile("(?i).*(entire screen|整个屏幕|整个画面).*"))),5000)
+                assertNotNull("未找到整个屏幕选项",entire);entire!!.click()
             }
-            if(!finalized) Thread.sleep(200)
-        }
-        assertTrue("新录制视频未完成保存",finalized)
-        context.contentResolver
-            .query(
-                uri,
-                arrayOf("_id", "_size"),
-                "_display_name LIKE ? AND date_added >= ?",
-                arrayOf("HuanBan_%",startedAfter.toString()),
-                "date_added DESC",
-            )!!
-            .use { c ->
-                assertTrue("未生成视频", c.moveToFirst())
-                assertTrue(c.getLong(1) > 1000)
-                val video = android.content.ContentUris.withAppendedId(uri, c.getLong(0))
-                val retriever = android.media.MediaMetadataRetriever()
-                try {
-                    retriever.setDataSource(context, video)
-                    assertTrue(
-                        retriever
-                            .extractMetadata(
-                                android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
-                            )!!
-                            .toLong() > 0
-                    )
-                    val frame=retriever.getFrameAtTime(0)
-                    assertNotNull("视频无法解码出图像",frame)
-                    var colored=0
-                    for(y in 0 until frame!!.height step 8)for(x in 0 until frame.width step 8)if(android.graphics.Color.red(frame.getPixel(x,y))+android.graphics.Color.green(frame.getPixel(x,y))+android.graphics.Color.blue(frame.getPixel(x,y))>80) colored++
-                    assertTrue("录制视频画面全黑",colored>50)
-                    java.io.File(context.filesDir,"qa-video.png").outputStream().use { frame.compress(android.graphics.Bitmap.CompressFormat.PNG,100,it) }
-                    frame.recycle()
-                } finally {
-                    retriever.release()
+            val approve = device.wait(Until.findObject(By.res("android:id/button1")), 15000)
+            assertNotNull("未出现系统录屏授权", approve)
+            approve!!.click()
+            val deadline = System.currentTimeMillis() + 20000
+            while (!RecordingService.running && System.currentTimeMillis() < deadline) Thread.sleep(250)
+            assertTrue(RecordingService.running)
+            var stageActivity: StageActivity? = null
+            if (mode == "ar") {
+                ins.runOnMainSync {
+                    stageActivity = androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry.getInstance()
+                        .getActivitiesInStage(androidx.test.runner.lifecycle.Stage.RESUMED)
+                        .filterIsInstance<StageActivity>().single()
                 }
+                CameraCompositeAssertions.freeze(stageActivity!!)
+                CameraCompositeAssertions.screen(stageActivity!!, "qa-video-ar-display")
             }
-        device.pressBack()
-        assertTrue(device.wait(Until.hasObject(By.desc("AR 模式")),15000))
-        ins.waitForIdleSync()
+            Thread.sleep(3500)
+            context.stopService(Intent(context, RecordingService::class.java))
+            Thread.sleep(2500)
+            assertFalse(RecordingService.running)
+            val uri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+            val end = android.os.SystemClock.elapsedRealtime()+30000
+            var finalized = false
+            while (!finalized && android.os.SystemClock.elapsedRealtime()<end) {
+                context.contentResolver.query(uri,arrayOf("_size","is_pending"),"_display_name LIKE ? AND date_added >= ?",arrayOf("HuanBan_%",startedAfter.toString()),"date_added DESC")?.use { cursor ->
+                    finalized = cursor.moveToFirst() && cursor.getLong(0)>1000 && cursor.getInt(1)==0
+                }
+                if(!finalized) Thread.sleep(200)
+            }
+            assertTrue("新录制视频未完成保存",finalized)
+            context.contentResolver
+                .query(
+                    uri,
+                    arrayOf("_id", "_size"),
+                    "_display_name LIKE ? AND date_added >= ?",
+                    arrayOf("HuanBan_%",startedAfter.toString()),
+                    "date_added DESC",
+                )!!
+                .use { c ->
+                    assertTrue("未生成视频", c.moveToFirst())
+                    assertTrue(c.getLong(1) > 1000)
+                    val video = android.content.ContentUris.withAppendedId(uri, c.getLong(0))
+                    val retriever = android.media.MediaMetadataRetriever()
+                    try {
+                        retriever.setDataSource(context, video)
+                        assertTrue(
+                            retriever
+                                .extractMetadata(
+                                    android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
+                                )!!
+                                .toLong() > 0
+                        )
+                        val durationMs = retriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION)!!.toLong()
+                        val frame=retriever.getFrameAtTime((durationMs - 500).coerceAtLeast(0) * 1000, android.media.MediaMetadataRetriever.OPTION_CLOSEST)
+                        assertNotNull("视频无法解码出图像",frame)
+                        var colored=0
+                        for(y in 0 until frame!!.height step 8)for(x in 0 until frame.width step 8)if(android.graphics.Color.red(frame.getPixel(x,y))+android.graphics.Color.green(frame.getPixel(x,y))+android.graphics.Color.blue(frame.getPixel(x,y))>80) colored++
+                        assertTrue("录制视频画面全黑",colored>50)
+                        if (mode == "ar") CameraCompositeAssertions.frame(stageActivity!!, frame, "qa-video-ar-composite")
+                        java.io.File(context.filesDir,"qa-video-$mode.png").outputStream().use { frame.compress(android.graphics.Bitmap.CompressFormat.PNG,100,it) }
+                        frame.recycle()
+                    } finally {
+                        retriever.release()
+                    }
+                }
+            device.pressBack()
+            assertTrue(device.wait(Until.hasObject(By.desc("AR 模式")),15000))
+            ins.waitForIdleSync()
+        }
     }
 
     @Test
