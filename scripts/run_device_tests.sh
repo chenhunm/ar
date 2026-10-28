@@ -26,8 +26,10 @@ trap collect_evidence EXIT
 "$adb_bin" logcat -v threadtime > evidence/device/logcat.txt 2>&1 &
 logcat_pid=$!
 test_class="${HUANBAN_TEST_CLASS:-com.huanban.ar.AppRegressionTest,com.huanban.ar.NativeIntegrationTest}"
-expected_tests="${HUANBAN_EXPECTED_TESTS:-19}"
+expected_tests="${HUANBAN_EXPECTED_TESTS:-20}"
 "$adb_bin" shell getprop > evidence/device/device-properties.txt
+"$adb_bin" shell wm size > evidence/device/display.txt
+"$adb_bin" shell wm density >> evidence/device/display.txt
 "$adb_bin" shell am force-stop com.huanban.ar
 "$adb_bin" shell pm revoke com.huanban.ar android.permission.CAMERA || true
 "$adb_bin" shell appops set com.huanban.ar SYSTEM_ALERT_WINDOW deny

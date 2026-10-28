@@ -72,8 +72,44 @@ object ModelCodec {
         return JSONObject(String(bytes, Charsets.UTF_8)) to byteArrayOf()
     }
 
+    // Filament 1.52 selects image providers from raw JSON MIME tokens.
+    // Android JSON escapes '/', so normalize actual slash escapes only.
+    internal fun rendererJson(text: String): String {
+        val slashEscape = 92.toChar().toString() + "/"
+        if (!text.contains(slashEscape)) return text
+        val out = StringBuilder(text.length)
+        var i = 0
+        while (i < text.length) {
+            if (text[i] == 92.toChar() && i + 1 < text.length) {
+                val next = text[i + 1]
+                if (next == '/') out.append('/') else out.append(92.toChar()).append(next)
+                i += 2
+            } else out.append(text[i++])
+        }
+        return out.toString()
+    }
+
+    // Migrate the JSON of older persisted GLBs, retaining every binary byte.
+    fun forRenderer(bytes: ByteArray): ByteArray {
+        require(bytes.size >= 20)
+        val h = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
+        require(h.int == 0x46546c67 && h.int == 2 && h.int == bytes.size)
+        val length = h.int
+        require(h.int == 0x4e4f534a && length >= 0 && length % 4 == 0 && 20L + length <= bytes.size)
+        val original = String(bytes,20,length,Charsets.UTF_8)
+        val normalized = rendererJson(original)
+        if (original == normalized) return bytes
+        val raw = normalized.toByteArray(Charsets.UTF_8)
+        val padded = raw + ByteArray((4-raw.size%4)%4){32}
+        val total = bytes.size-length+padded.size
+        return ByteBuffer.allocate(total).order(ByteOrder.LITTLE_ENDIAN)
+            .putInt(0x46546c67).putInt(2).putInt(total)
+            .putInt(padded.size).putInt(0x4e4f534a).put(padded)
+            .put(bytes,20+length,bytes.size-20-length).array()
+    }
+
     fun pack(j: JSONObject, bin: ByteArray): ByteArray {
-        val raw = j.toString().toByteArray()
+        val raw = rendererJson(j.toString()).toByteArray(Charsets.UTF_8)
         val js = raw + ByteArray((4 - raw.size % 4) % 4) { 32 }
         val bs = bin + ByteArray((4 - bin.size % 4) % 4)
         return ByteBuffer.allocate(28 + js.size + bs.size)

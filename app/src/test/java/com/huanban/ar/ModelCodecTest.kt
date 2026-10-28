@@ -318,4 +318,30 @@ class ModelCodecTest {
     @Test fun capableSwiftShaderDriverIsNotBlanketBlocked() {
         assertFalse(GpuCompatibility.isKnownBrokenDriver("SwiftShader","OpenGL ES 3.0 SwiftShader 4.0.0.1",1024))
     }
+
+    @Test fun rendererJsonPreservesEscapesAndCanonicalizesMime() {
+        val encoded = """{"mimeType":"image\/png","escaped":"a\\/b","literal":"a\/b","unicode":"衣料/角色","line":"a\n/b"}"""
+        val normalized = ModelCodec.rendererJson(encoded)
+        val before=JSONObject(encoded);val after=JSONObject(normalized)
+        for(key in listOf("mimeType","escaped","literal","unicode","line"))
+            assertEquals(before.getString(key),after.getString(key))
+        assertTrue(normalized.contains("image/png"))
+        assertFalse(normalized.contains("image"+92.toChar()+"/png"))
+    }
+    @Test fun oldGlbMigrationKeepsBinaryAndAlignment() {
+        val json="""{"asset":{"version":"2.0"},"images":[{"mimeType":"image\/png"}],"name":"a\\/b"}""".toByteArray()
+        val padded=json+ByteArray((4-json.size%4)%4){32}
+        val bin=byteArrayOf(3,8,13,21,34,55,89,0)
+        val old=ByteBuffer.allocate(28+padded.size+bin.size).order(ByteOrder.LITTLE_ENDIAN)
+            .putInt(0x46546c67).putInt(2).putInt(28+padded.size+bin.size)
+            .putInt(padded.size).putInt(0x4e4f534a).put(padded)
+            .putInt(bin.size).putInt(0x004e4942).put(bin).array()
+        val migrated=ModelCodec.forRenderer(old)
+        val (j,b)=ModelCodec.unpack(migrated)
+        assertEquals("image/png",j.getJSONArray("images").getJSONObject(0).getString("mimeType"))
+        assertEquals("a"+92.toChar()+"/b",j.getString("name"));assertArrayEquals(bin,b)
+        val h=ByteBuffer.wrap(migrated).order(ByteOrder.LITTLE_ENDIAN)
+        assertEquals(migrated.size,h.getInt(8));assertEquals(0,h.getInt(12)%4)
+        assertSame(migrated,ModelCodec.forRenderer(migrated))
+    }
 }

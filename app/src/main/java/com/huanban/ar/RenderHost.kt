@@ -185,7 +185,7 @@ class RenderHost(
             if (disposed || ticket != generation) return@execute
             val start = SystemClock.elapsedRealtime()
             val result = runCatching {
-                val bytes = RoleStore(context).file(r).readBytes()
+                val bytes = ModelCodec.forRenderer(RoleStore(context).file(r).readBytes())
                 require(bytes.size <= ModelCodec.MAX_BYTES + 2 * 1024 * 1024)
                 val direct = ByteBuffer.allocateDirect(bytes.size)
                 direct.put(bytes).flip()

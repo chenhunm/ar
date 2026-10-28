@@ -352,9 +352,10 @@ class NativeIntegrationTest {
         device.executeShellCommand("pm grant ${context.packageName} android.permission.CAMERA")
         val ar = stage("ar")
         val camera = field(ar, "camera") as? CameraBackdrop
+        val cameraTexture = field(ar,"cameraTexture") as? android.view.TextureView
         try {
             assertNotNull("无 ARCore 的测试设备必须进入相机后备模式", camera)
-            val texture = field(ar, "cameraTexture") as android.view.TextureView
+            val texture = cameraTexture ?: error("相机预览视图缺失")
             val oldTimestamp = texture.surfaceTexture!!.timestamp
             ins.runOnMainSync { repeat(3) { camera!!.stop(); camera.start() } }
             waitFor("快速暂停恢复后输出新的相机帧") { field(camera!!,"session") != null && texture.surfaceTexture!!.timestamp > oldTimestamp }
@@ -379,12 +380,11 @@ class NativeIntegrationTest {
                     frame.recycle()
                 }
             }
-            device.setOrientationNatural()
-            device.unfreezeRotation()
         } finally {
-            device.setOrientationNatural()
-            device.unfreezeRotation()
-            closeStage(ar)
+            try {
+                device.setOrientationNatural()
+                if(cameraTexture!=null) waitFor("竖屏恢复后再退出") {cameraTexture.width<cameraTexture.height}
+            } finally {device.unfreezeRotation();closeStage(ar)}
         }
         waitFor("相机资源释放") { camera == null ||
             (field(camera,"camera") == null && field(camera,"session") == null && field(camera,"surface") == null &&

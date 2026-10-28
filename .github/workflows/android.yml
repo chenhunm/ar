@@ -2,8 +2,10 @@ name: Android build and regression
 on:
   push:
     branches: [main]
+    paths-ignore: ['**/*.md', 'evidence/**', 'SHA256SUMS.txt', 'LICENSE']
   pull_request:
     branches: [main]
+    paths-ignore: ['**/*.md', 'evidence/**', 'SHA256SUMS.txt', 'LICENSE']
   workflow_dispatch:
 permissions:
   contents: read
@@ -47,9 +49,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {api: 30, target: default, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 13}
+          - {api: 30, target: default, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
           - {api: 30, target: default, suite: native, test_class: com.huanban.ar.NativeIntegrationTest, expected: 6}
-          - {api: 35, target: google_apis, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 13}
+          - {api: 35, target: google_apis, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
           - {api: 35, target: google_apis, suite: native, test_class: com.huanban.ar.NativeIntegrationTest, expected: 6}
     name: Android ${{ matrix.api }} / ${{ matrix.suite }}
     steps:
@@ -90,9 +92,10 @@ jobs:
           emulator-boot-timeout: 300
           disable-animations: true
           pre-emulator-launch-script: |
+            python3 scripts/configure_ci_display.py "$ANDROID_AVD_HOME/test.avd/config.ini"
             df -h .
             python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 9*1024**3, "Insufficient emulator disk headroom"'
-          emulator-options: -no-window -gpu swangle -no-audio -no-boot-anim -no-snapshot -camera-back emulated
+          emulator-options: -no-window -skin 480x800 -gpu swangle -no-audio -no-boot-anim -no-snapshot -camera-back emulated
           script: |
             adb install -r app/build/outputs/apk/debug/app-debug.apk
             adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk

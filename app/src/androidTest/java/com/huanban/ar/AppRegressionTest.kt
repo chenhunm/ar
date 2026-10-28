@@ -191,23 +191,33 @@ class AppRegressionTest {
         s.select(r)
         launch()
         tap("桌宠模式")
-        repeat(3) { cycle ->
-            tap("启动 / 恢复桌宠")
-            assertTrue(device.wait(Until.hasObject(By.text("幻伴 · 点击菜单")), 30000))
-            tap("幻伴 · 点击菜单")
-            assertTrue(device.wait(Until.hasObject(By.text("放大")), 10000))
-            tap("放大")
-            if (cycle == 0) {
-                device.pressHome()
-                assertTrue(device.wait(Until.hasObject(By.text("幻伴 · 点击菜单")), 10000))
-                launch()
+        try {
+            repeat(3) { cycle ->
+                tap("启动 / 恢复桌宠")
+                if(android.os.Build.VERSION.SDK_INT >= 33 && context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                    val allow=device.wait(Until.findObject(By.res(java.util.regex.Pattern.compile(".*:id/permission_allow_button"))),10000)
+                    assertNotNull("未出现通知授权",allow);allow!!.click()
+                }
+                assertTrue(device.wait(Until.hasObject(By.text("幻伴 · 点击菜单")), 30000))
+                tap("幻伴 · 点击菜单")
+                assertTrue(device.wait(Until.hasObject(By.text("放大")), 10000))
+                tap("放大")
+                if (cycle == 0) {
+                    device.pressHome()
+                    assertTrue(device.wait(Until.hasObject(By.text("幻伴 · 点击菜单")), 10000))
+                    launch()
+                }
+                tap("关闭")
+                if (cycle == 0) tap("桌宠模式")
+                Thread.sleep(500)
             }
-            tap("关闭")
-            if (cycle == 0) tap("桌宠模式")
-            Thread.sleep(500)
+        } finally {
+            context.stopService(Intent(context,PetService::class.java))
+            val end=android.os.SystemClock.elapsedRealtime()+45000
+            while(PetService.current.get()!=null && android.os.SystemClock.elapsedRealtime()<end) Thread.sleep(100)
+            assertNull("桌宠清理未完成",PetService.current.get())
+            s.select(s.roles().first{it.id=="qing"});s.delete(r)
         }
-        s.select(s.roles().first())
-        s.delete(r)
     }
 
     @Test
@@ -254,7 +264,7 @@ class AppRegressionTest {
         val deny =
             device.wait(
                 Until.findObject(
-                    By.res("com.android.permissioncontroller:id/permission_deny_button")
+                    By.res(java.util.regex.Pattern.compile(".*:id/permission_deny_button"))
                 ),
                 10000,
             )
@@ -285,6 +295,12 @@ class AppRegressionTest {
         tap("舞蹈模式")
         assertTrue(device.wait(Until.hasObject(By.textContains("ms")), 45000))
         tap("录制视频")
+        if(android.os.Build.VERSION.SDK_INT >= 34) {
+            val modes=device.wait(Until.findObject(By.res(java.util.regex.Pattern.compile("com.android.systemui:id/screen_share_mode_(options|spinner)"))),10000)
+            assertNotNull("未出现录屏范围选择",modes);modes!!.click()
+            val entire=device.wait(Until.findObject(By.text(java.util.regex.Pattern.compile("(?i).*(entire screen|整个屏幕|整个画面).*"))),5000)
+            assertNotNull("未找到整个屏幕选项",entire);entire!!.click()
+        }
         val approve = device.wait(Until.findObject(By.res("android:id/button1")), 15000)
         assertNotNull("未出现系统录屏授权", approve)
         approve!!.click()
@@ -397,5 +413,14 @@ class AppRegressionTest {
             assertEquals("保留自定义名称",updated.name);assertEquals(1.25f,updated.scale);assertEquals(2,updated.action)
             assertTrue(store.file(updated).length()>0)
         } finally {store.update(original)}
+    }
+
+    @Test fun n_androidTextureMimeUsesNativeTokens() {
+        val json=org.json.JSONObject().put("images",org.json.JSONArray().put(org.json.JSONObject().put("mimeType","image/png"))).put("name",("衣料"+92.toChar()+"/角色"))
+        val bytes=ModelCodec.pack(json,byteArrayOf(1,2,3,4))
+        val h=java.nio.ByteBuffer.wrap(bytes).order(java.nio.ByteOrder.LITTLE_ENDIAN)
+        val raw=String(bytes,20,h.getInt(12),Charsets.UTF_8)
+        assertTrue(raw.contains("image/png"));assertFalse(raw.contains("image"+92.toChar()+"/png"))
+        assertEquals(("衣料"+92.toChar()+"/角色"),ModelCodec.unpack(bytes).first.getString("name"))
     }
 }
