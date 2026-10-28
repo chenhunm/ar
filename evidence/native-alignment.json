@@ -1,0 +1,42 @@
+[
+  {
+    "name": "lib/arm64-v8a/libarcore_sdk_c.so",
+    "load_alignments": [
+      16384,
+      16384,
+      16384
+    ]
+  },
+  {
+    "name": "lib/arm64-v8a/libarcore_sdk_jni.so",
+    "load_alignments": [
+      16384,
+      16384,
+      16384
+    ]
+  },
+  {
+    "name": "lib/arm64-v8a/libfilament-jni.so",
+    "load_alignments": [
+      4096,
+      4096,
+      4096
+    ]
+  },
+  {
+    "name": "lib/arm64-v8a/libfilament-utils-jni.so",
+    "load_alignments": [
+      4096,
+      4096,
+      4096
+    ]
+  },
+  {
+    "name": "lib/arm64-v8a/libgltfio-jni.so",
+    "load_alignments": [
+      4096,
+      4096,
+      4096
+    ]
+  }
+]

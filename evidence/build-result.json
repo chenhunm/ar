@@ -1,0 +1,15 @@
+{
+  "exit_code": 0,
+  "seconds": 448.63,
+  "command": [
+    "bash",
+    "../tools/gradle-8.9/bin/gradle",
+    "--no-daemon",
+    "--max-workers=2",
+    "clean",
+    "lintDebug",
+    "testDebugUnitTest",
+    "assembleDebug",
+    "assembleDebugAndroidTest"
+  ]
+}
