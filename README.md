@@ -1,6 +1,6 @@
 # 幻伴 AR / HuanBan AR
 
-**当前版本为 1.0.2 验收候选；实际通过项、已知问题与最新构建状态见 [STATUS.md](STATUS.md)。尚未完成完整验收。**
+**1.0.2 已通过云端构建、31 项单元测试及 Android 30/35 共 40 项设备测试。K80、真实 ARCore 和 16KB 页兼容仍待实机验收；详见 [验收报告](验收报告.md)。**
 
 原生 Kotlin 安卓应用。包名 `com.huanban.ar`，Android 11/API 30 及以上，目标 API 35。APK 自带两种原创几何风格角色（青禾：普通人形；团子：Q 版），无需下载模型、注册账号或配置 AI 即可进入核心模式。界面为简体中文。
 
@@ -31,7 +31,9 @@ JDK 17、Android SDK platform 35、Build Tools 34/35、Gradle 8.9。首次构建
 ```bash
 ./gradlew --no-daemon lintDebug testDebugUnitTest assembleDebug assembleDebugAndroidTest
 # 可用 Android 测试设备/模拟器连接后：
-./gradlew connectedDebugAndroidTest
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+bash scripts/run_device_tests.sh
 ```
 
 Windows 使用 `gradlew.bat`。生成 APK 在 `app/build/outputs/apk/debug/app-debug.apk`。调试 APK 已签名，可直接安装。签名密钥不提交到 GitHub。CI 使用自动生成的临时调试密钥，因此不同构建的签名可能不同，不能保证覆盖安装已有 APK。已有本地交付环境保留其调试签名；公开发布需独立保管正式签名。升级必须使用与现有安装相同的签名。
