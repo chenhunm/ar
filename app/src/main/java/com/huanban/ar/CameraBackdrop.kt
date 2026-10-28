@@ -11,6 +11,20 @@ import android.view.TextureView
 
 /** Camera2 fallback only. It deliberately has no spatial-tracking claims. */
 class CameraBackdrop(val context: Context, val texture: TextureView, val report: (String) -> Unit) {
+    /** TextureView.getBitmap omits setTransform. Apply the same crop/rotation
+     * as the live preview so saved images and final-display checks agree. */
+    fun capturePreview(): android.graphics.Bitmap? {
+        val raw = texture.bitmap ?: return null
+        try {
+            val result = android.graphics.Bitmap.createBitmap(texture.width, texture.height, android.graphics.Bitmap.Config.ARGB_8888)
+            android.graphics.Canvas(result).apply {
+                drawColor(android.graphics.Color.BLACK)
+                drawBitmap(raw, texture.getTransform(android.graphics.Matrix()), android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG))
+            }
+            return result
+        } finally { raw.recycle() }
+    }
+
     // Camera2 processes frames in the HAL; state callbacks stay on a live main handler.
     // Never quit a callback looper while an asynchronous open is still pending.
     private val handler = Handler(context.mainLooper)

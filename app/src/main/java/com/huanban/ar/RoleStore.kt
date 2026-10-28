@@ -150,10 +150,25 @@ class RoleStore(val context: Context) {
                         it.getString(it.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
                     else "导入角色"
                 } ?: "导入角色"
-        require(name.substringAfterLast('.').lowercase() in listOf("glb", "vrm", "gltf")) {
-            "请选择 GLB / VRM；GLTF 请使用目录导入"
+        require(name.substringAfterLast('.').lowercase() in listOf("glb", "vrm", "gltf", "zip", "7z")) {
+            "请选择 GLB / VRM / ZIP / 7z；GLTF 关联资源可放入压缩包"
         }
         val b = readLimited(context.contentResolver.openInputStream(uri) ?: error("无法读取文件"))
+        if (ModelArchive.isArchive(b)) {
+            val temporary = File(context.cacheDir, "model-archive-${UUID.randomUUID()}")
+            temporary.mkdirs()
+            try {
+                val archive = File(temporary,"input.archive").apply { writeBytes(b) }
+                val files = ModelArchive.models(archive, File(temporary,"expanded"))
+                require(files.size == 1) { "压缩包包含 ${files.size} 个模型，请分别打包或使用目录导入" }
+                val model = files.single()
+                return importBytes(model.name, readLimited(model.inputStream())) { path ->
+                    val resource = File(model.parentFile, ModelCodec.safePath(path))
+                    require(resource.canonicalPath.startsWith(model.parentFile!!.canonicalPath + File.separator))
+                    readLimited(resource.inputStream())
+                }
+            } finally { temporary.deleteRecursively() }
+        }
         return importBytes(name, b)
     }
 
@@ -220,3 +235,4 @@ class RoleStore(val context: Context) {
         }
     }
 }
+

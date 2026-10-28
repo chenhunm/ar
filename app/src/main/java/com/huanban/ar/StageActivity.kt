@@ -521,7 +521,7 @@ class StageActivity : ComponentActivity() {
                     try {
                         val result =
                             if (mode == "ar" && fallback) {
-                                val bg = cameraTexture?.bitmap ?: error("摄像头画面尚未准备好")
+                                val bg = camera?.capturePreview() ?: error("摄像头画面尚未准备好")
                                 val b =
                                     Bitmap.createBitmap(
                                         model.width,

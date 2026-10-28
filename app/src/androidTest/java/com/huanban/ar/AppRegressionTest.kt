@@ -20,6 +20,14 @@ class AppRegressionTest {
 
     @Before fun prepareDevice() { TestDevice.prepare() }
 
+    @get:Rule val failureEvidence = object : org.junit.rules.TestWatcher() {
+        override fun failed(e: Throwable, description: org.junit.runner.Description) {
+            val name = "qa-failure-${description.methodName}"
+            device.takeScreenshot(java.io.File(context.filesDir, "$name.png"))
+            device.dumpWindowHierarchy(java.io.File(context.filesDir, "$name.xml"))
+        }
+    }
+
     private fun tap(text: String) {
         var target: androidx.test.uiautomator.UiObject2? = null
         val end=android.os.SystemClock.elapsedRealtime()+3000
@@ -148,7 +156,9 @@ class AppRegressionTest {
         assertEquals(0, engine.history().length())
         launch()
         tap("人物对话")
-        device.findObject(By.clazz("android.widget.EditText"))!!.text = "你好"
+        val input = device.wait(Until.findObject(By.clazz("android.widget.EditText")), 15000)
+        assertNotNull("聊天输入框未出现", input)
+        input!!.text = "你好"
         tap("发送")
         assertTrue(device.wait(Until.hasObject(By.textContains("【本地规则】")),30000))
         tap("停止朗读")
@@ -278,6 +288,7 @@ class AppRegressionTest {
         )
         assertTrue(device.wait(Until.hasObject(By.text("追踪 / 叠加")), 30000))
         tap("追踪 / 叠加")
+        assertTrue("叠加模式选择菜单未出现", device.wait(Until.hasObject(By.text("摄像头叠加（无空间锚定）")), 15000))
         tap("摄像头叠加（无空间锚定）")
         assertTrue(device.wait(Until.hasObject(By.textContains("无空间锚定")), 45000))
         Thread.sleep(2000)

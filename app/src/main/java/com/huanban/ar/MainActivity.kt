@@ -204,6 +204,7 @@ class MainActivity : ComponentActivity() {
         page = "roles"
         val col = layout("角色管理")
         col.addView(Ui.button(this, "导入 GLB / VRM 文件") { filePicker.launch(arrayOf("*/*")) })
+        col.addView(Ui.secondary(this, "导入 ZIP / 7z 压缩包") { filePicker.launch(arrayOf("*/*")) })
         col.addView(Ui.secondary(this, "导入 GLTF 及关联资源目录") { treePicker.launch(null) })
         col.addView(
             Ui.text(
@@ -484,3 +485,4 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
     }
 }
+

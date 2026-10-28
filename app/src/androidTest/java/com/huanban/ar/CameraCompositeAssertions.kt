@@ -62,7 +62,7 @@ object CameraCompositeAssertions {
         var camera: Bitmap? = null
         ins.runOnMainSync {
             host.view.getLocationOnScreen(location)
-            camera = (field(activity, "cameraTexture") as TextureView).bitmap
+            camera = (field(activity, "camera") as CameraBackdrop).capturePreview()
         }
         val background = camera ?: error("相机像素缺失")
         val model = Bitmap.createBitmap(host.view.width, host.view.height, Bitmap.Config.ARGB_8888)
