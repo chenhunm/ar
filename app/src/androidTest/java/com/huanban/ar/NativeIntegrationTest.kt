@@ -391,7 +391,7 @@ class NativeIntegrationTest {
         } finally {
             try {
                 device.setOrientationNatural()
-                if(cameraTexture!=null) waitFor("竖屏恢复后再退出") {cameraTexture.width<cameraTexture.height}
+                if(cameraTexture!=null) waitFor("竖屏恢复后再退出") { ar.window.decorView.width < ar.window.decorView.height && ar.windowManager.defaultDisplay.rotation == Surface.ROTATION_0 }
             } finally {device.unfreezeRotation();closeStage(ar)}
         }
         waitFor("相机资源释放") { camera == null ||
