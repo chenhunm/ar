@@ -25,16 +25,19 @@ trap collect_evidence EXIT
 "$adb_bin" logcat -c
 "$adb_bin" logcat -v threadtime > evidence/device/logcat.txt 2>&1 &
 logcat_pid=$!
+test_class="${HUANBAN_TEST_CLASS:-com.huanban.ar.AppRegressionTest,com.huanban.ar.NativeIntegrationTest}"
+expected_tests="${HUANBAN_EXPECTED_TESTS:-19}"
 "$adb_bin" shell getprop > evidence/device/device-properties.txt
 "$adb_bin" shell am force-stop com.huanban.ar
 "$adb_bin" shell pm revoke com.huanban.ar android.permission.CAMERA || true
 "$adb_bin" shell appops set com.huanban.ar SYSTEM_ALERT_WINDOW deny
 # A blocked native/UI thread must still yield logs instead of consuming the
 # entire CI job. This is a suite timeout; individual measured modes need 60s.
-timeout --signal=TERM --kill-after=30s 20m "$adb_bin" shell am instrument -w -r -e class com.huanban.ar.AppRegressionTest,com.huanban.ar.NativeIntegrationTest com.huanban.ar.test/androidx.test.runner.AndroidJUnitRunner 2>&1 | tee evidence/device/instrumentation.txt
-python3 - <<'PY'
-import pathlib,re,sys
+timeout --signal=TERM --kill-after=30s 20m "$adb_bin" shell am instrument -w -r -e class "$test_class" com.huanban.ar.test/androidx.test.runner.AndroidJUnitRunner 2>&1 | tee evidence/device/instrumentation.txt
+HUANBAN_EXPECTED_TESTS="$expected_tests" python3 - <<'PY'
+import os,pathlib,re,sys
 log=pathlib.Path('evidence/device/instrumentation.txt').read_text()
-if not re.search(r'OK \(19 tests\)',log) or any(marker in log for marker in ['FAILURES!!!','INSTRUMENTATION_FAILED','Process crashed']):
+expected=int(os.environ['HUANBAN_EXPECTED_TESTS'])
+if not re.search(rf'OK \({expected} tests?\)',log) or any(marker in log for marker in ['FAILURES!!!','INSTRUMENTATION_FAILED','Process crashed']):
     sys.exit('Android regression did not pass; retain logcat and inspect the failing test.')
 PY

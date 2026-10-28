@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Button
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import java.io.File
 import java.util.concurrent.CountDownLatch
@@ -390,6 +391,10 @@ class NativeIntegrationTest {
              field(camera,"pendingOpens") == 0 && field(camera,"pendingCloses") == 0) }
         device.executeShellCommand("appops set ${context.packageName} SYSTEM_ALERT_WINDOW allow")
         try {
+            // Android 15 requires a visible user entry before a new special-use
+            // FGS. Exercise the same foreground entry as the production UI.
+            context.startActivity(Intent(context,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            waitFor("桌宠启动前台入口") { device.hasObject(By.desc("AR 模式")) }
             ins.runOnMainSync { context.startForegroundService(Intent(context,PetService::class.java).setAction("show")) }
             waitFor("独立桌宠加载") { PetService.current.get()?.let { (field(it,"host") as? RenderHost)?.node != null } == true }
             val service = PetService.current.get()!!

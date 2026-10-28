@@ -1,0 +1,4 @@
+10-28 02:51:25.697  2303  2375 I TestRunner: started: h_safStreamsAndTreeResources(com.huanban.ar.AppRegressionTest)
+10-28 02:51:26.294  2303  2375 D UiDevice: Executing shell command: am start -W -n com.huanban.ar.test/com.huanban.ar.FixtureGrantActivity
+10-28 02:51:26.323   507   538 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.huanban.ar.test/com.huanban.ar.FixtureGrantActivity} from uid 2000
+10-28 02:51:26.380   507   550 I ActivityManager: Start proc 2714:com.huanban.ar.test/u0a131 for pre-top-activity {com.huanban.ar.test/com.huanban.ar.FixtureGrantActivity}

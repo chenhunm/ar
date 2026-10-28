@@ -11,9 +11,9 @@ concurrency:
   group: android-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  verify:
+  build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -29,8 +29,8 @@ jobs:
         run: sdkmanager "platforms;android-35" "build-tools;34.0.0"
       - name: Lint, JVM tests and APK builds
         run: set -o pipefail; ./gradlew --no-daemon --max-workers=2 lintDebug testDebugUnitTest assembleDebug assembleDebugAndroidTest 2>&1 | tee build.log
-      - name: Save successful build before device tests
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: huanban-build-apk-reports
           retention-days: 14
@@ -39,6 +39,30 @@ jobs:
             app/build/reports/
             app/build/test-results/
             build.log
+  device:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {api: 30, target: default, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 13}
+          - {api: 30, target: default, suite: native, test_class: com.huanban.ar.NativeIntegrationTest, expected: 6}
+          - {api: 35, target: google_apis, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 13}
+          - {api: 35, target: google_apis, suite: native, test_class: com.huanban.ar.NativeIntegrationTest, expected: 6}
+    name: Android ${{ matrix.api }} / ${{ matrix.suite }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: huanban-build-apk-reports
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -48,14 +72,17 @@ jobs:
         run: |
           test "$RUNNER_ENVIRONMENT" = github-hosted
           test "$ANDROID_HOME" = /usr/local/lib/android/sdk
-          # This project uses prebuilt native dependencies and no .NET toolchain.
-          # Only remove unused software from this disposable GitHub VM.
+          # Only unused software in this disposable GitHub VM is removed.
           sudo rm -rf /usr/share/dotnet "$ANDROID_HOME/ndk"
           df -h .
-          python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 10*1024**3, "Emulator needs disk headroom before SDK image download"'
+          python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 10*1024**3, "Emulator needs disk headroom"'
       - uses: reactivecircus/android-emulator-runner@v2
+        env:
+          HUANBAN_TEST_CLASS: ${{ matrix.test_class }}
+          HUANBAN_EXPECTED_TESTS: ${{ matrix.expected }}
         with:
-          api-level: 30
+          api-level: ${{ matrix.api }}
+          target: ${{ matrix.target }}
           arch: x86_64
           profile: pixel_2
           ram-size: 2048M
@@ -64,7 +91,6 @@ jobs:
           disable-animations: true
           pre-emulator-launch-script: |
             df -h .
-            grep '^disk.dataPartition.size=' "$ANDROID_AVD_HOME/test.avd/config.ini"
             python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 9*1024**3, "Insufficient emulator disk headroom"'
           emulator-options: -no-window -gpu swangle -no-audio -no-boot-anim -no-snapshot -camera-back emulated
           script: |
@@ -74,9 +100,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: huanban-device-tests-logs
+          name: huanban-device-${{ matrix.api }}-${{ matrix.suite }}
           retention-days: 14
-          path: |
-            app/build/outputs/androidTest-results/
-            evidence/device/
-            build.log
+          path: evidence/device/

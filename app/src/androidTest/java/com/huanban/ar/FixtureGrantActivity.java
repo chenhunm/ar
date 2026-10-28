@@ -13,6 +13,7 @@ public class FixtureGrantActivity extends Activity {
         for(String name:new String[]{"fixture.glb","fixture.vrm","fixture.gltf","mesh.bin"})
             grantUriPermission("com.huanban.ar",DocumentsContract.buildDocumentUri(authority,name),Intent.FLAG_GRANT_READ_URI_PERMISSION);
         grantUriPermission("com.huanban.ar",DocumentsContract.buildTreeDocumentUri(authority,"root"),Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
+        android.util.Log.i("HuanBanFixtures","Granted fixture documents and tree");
         finish();
     }
 }

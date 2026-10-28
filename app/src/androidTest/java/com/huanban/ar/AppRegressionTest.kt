@@ -155,8 +155,19 @@ class AppRegressionTest {
         tap("‹ 返回首页")
         tap("人物对话")
         assertTrue(device.wait(Until.hasObject(By.textContains("你好，我在这里")),10000))
-        // AOSP image has no speech recognizer; the text interface must remain usable.
+        // AOSP may lack recognition; Google images may offer an external UI.
+        // Cancel any external recognizer and retain the same editable chat.
         tap("语音输入")
+        Thread.sleep(500)
+        repeat(3) {
+            assertFalse("语音入口出现崩溃或 ANR 对话框",
+                device.hasObject(By.res("android:id/aerr_close")) ||
+                device.hasObject(By.res("android:id/aerr_wait")))
+            if (device.currentPackageName != context.packageName) {
+                device.pressBack()
+                Thread.sleep(250)
+            }
+        }
         assertTrue(device.wait(Until.hasObject(By.text("发送")),10000))
     }
 
@@ -205,7 +216,11 @@ class AppRegressionTest {
         store.ensureBuiltins()
         val authority = "com.huanban.ar.test.fixtures"
         device.executeShellCommand(
-            "am start -W -n com.huanban.ar.test/com.huanban.ar.FixtureGrantActivity"
+            // This fixture finishes inside onCreate and never draws a frame.
+            // `am start -W` can wait forever for that nonexistent first draw.
+            // Start without -W; the bounded URI permission poll below is the
+            // actual readiness condition for the DocumentsProvider.
+            "am start -n com.huanban.ar.test/com.huanban.ar.FixtureGrantActivity"
         )
         val grants = listOf("fixture.glb","fixture.vrm").map {
             android.provider.DocumentsContract.buildDocumentUri(authority,it)
