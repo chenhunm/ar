@@ -15,7 +15,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -27,8 +27,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: false
-      - name: Install compile SDK
-        run: sdkmanager "platforms;android-35" "build-tools;34.0.0"
+      - name: Reserve native build disk on disposable hosted runner
+        run: |
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$ANDROID_HOME" = /usr/local/lib/android/sdk
+          sudo rm -rf /usr/share/dotnet "$ANDROID_HOME/ndk"
+          df -h .
+      - name: Install compile SDK and NDK
+        run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
       - name: Lint, JVM tests and APK builds
         run: set -o pipefail; ./gradlew --no-daemon --max-workers=2 lintDebug testDebugUnitTest assembleDebug assembleDebugAndroidTest 2>&1 | tee build.log
       - uses: actions/upload-artifact@v4
@@ -50,9 +56,9 @@ jobs:
       matrix:
         include:
           - {api: 30, target: default, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
-          - {api: 30, target: default, suite: native, test_class: com.huanban.ar.NativeIntegrationTest, expected: 6}
+          - {api: 30, target: default, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest", expected: 9}
           - {api: 35, target: google_apis, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
-          - {api: 35, target: google_apis, suite: native, test_class: com.huanban.ar.NativeIntegrationTest, expected: 6}
+          - {api: 35, target: google_apis, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest", expected: 9}
     name: Android ${{ matrix.api }} / ${{ matrix.suite }}
     steps:
       - uses: actions/checkout@v4

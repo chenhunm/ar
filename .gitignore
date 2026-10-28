@@ -4,3 +4,8 @@ local.properties
 *.jks
 *.keystore
 captures/
+
+
+# User-provided private model: local personal builds only.
+app/src/main/assets/models/user-default.7z
+.native-deps/

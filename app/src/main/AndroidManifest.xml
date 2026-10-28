@@ -21,5 +21,7 @@
         <activity android:name=".StageActivity" android:exported="false" android:configChanges="orientation|screenSize" />
         <service android:name=".PetService" android:exported="false" android:foregroundServiceType="specialUse"><property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="User-controlled interactive 3D desktop companion overlay" /></service>
         <service android:name=".RecordingService" android:exported="false" android:foregroundServiceType="mediaProjection" />
+        <service android:name=".ModelConversionService" android:exported="false" android:process=":model_import" />
     </application>
 </manifest>
+

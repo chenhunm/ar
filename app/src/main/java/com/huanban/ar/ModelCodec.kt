@@ -260,12 +260,13 @@ object ModelCodec {
             }
         }
         val meshes = j.getJSONArray("meshes")
+        val countedPositions=mutableSetOf<Int>()
         for (i in 0 until meshes.length()) {
             val ps = meshes.getJSONObject(i).getJSONArray("primitives")
             for (k in 0 until ps.length()) {
                 val p = ps.getJSONObject(k).getJSONObject("attributes").getInt("POSITION")
                 require(p in 0 until access.length())
-                vertices += access.getJSONObject(p).getLong("count")
+                if(countedPositions.add(p)) vertices += access.getJSONObject(p).getLong("count")
             }
         }
         require(vertices <= 750_000) { "顶点总数超过 75 万，无法安全加载" }
@@ -287,6 +288,9 @@ object ModelCodec {
         val warning =
             listOfNotNull(
                     if (vrm) "VRM 使用 glTF 基础材质；MToon、弹簧骨骼与物理碰撞不支持" else null,
+                    j.optJSONObject("extensions")?.optJSONObject("VRM")?.optJSONObject("meta")?.let { meta ->
+                        "模型作者：${meta.optString("author","未标注")}；原授权：${meta.optString("licenseName","未标注")}；可用用户：${meta.optString("allowedUserName","未标注")}"
+                    },
                     if (!rig) "未识别兼容人形骨骼；保留模型自带动画，不能套用内置动作" else null,
                 )
                 .joinToString("；")

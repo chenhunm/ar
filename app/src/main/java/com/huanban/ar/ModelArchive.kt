@@ -76,7 +76,7 @@ object ModelArchive {
             }
         }
         extract(input,destination,1)
-        return destination.walkTopDown().filter { it.isFile && it.extension.lowercase() in setOf("glb","gltf","vrm") }.toList()
-            .also { require(it.isNotEmpty()) { "包内没有 GLB / GLTF / VRM 模型；其他格式尚需转换" } }
+        return destination.walkTopDown().filter { it.isFile && it.extension.lowercase() in (setOf("glb","gltf","vrm") + NativeModelCodec.extensions + LegacyModelCodec.extensions) }.toList()
+            .also { require(it.isNotEmpty()) { "包内没有可导入模型；支持 GLB、GLTF、VRM、FBX、PMX、OBJ 和部分旧版 Blender 文件" } }
     }
 }

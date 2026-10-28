@@ -16,3 +16,14 @@
 | Gradle Wrapper | 8.9 | https://github.com/gradle/gradle | Apache-2.0 |
 
 上游组件的许可、版权和 NOTICE 仍由对应组件所有者保留。APK 中包含 Android Gradle 工具生成的第三方许可/元数据；自用不改变相应再分发义务。未把 SDK 本身、模拟器镜像或下载工具打包进源码交付物。
+
+
+
+## Additional import libraries
+
+- Assimp 6.0.2: BSD 3-Clause, https://github.com/assimp/assimp/blob/v6.0.2/LICENSE . Its bundled dependencies retain their licenses (zlib, RapidJSON MIT, poly2tri BSD and others listed in the upstream source). Native conversion is built from the pinned source archive and does not include third-party sample characters.
+- Apache Commons Compress 1.28.0: Apache License 2.0, https://commons.apache.org/proper/commons-compress/ .
+- XZ for Java 1.10: public domain, https://tukaani.org/xz/java.html .
+- Legacy PMD and XPS readers are implemented in this project from their data layouts; no Blender add-on implementation is bundled.
+
+User-provided optional model archives are not covered by this project's MIT or CC0 licenses. Preserve their author and license metadata. The optional personal-build asset is excluded from the Git repository and must not be redistributed without the rights holder's permission.

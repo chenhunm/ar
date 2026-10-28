@@ -314,7 +314,7 @@ class StageActivity : ComponentActivity() {
                 ar.onSessionUpdated = { _, f -> frame = f }
             }
             gestures(h, realAr)
-            val role = store.selected() ?: error("角色库为空")
+            val role = (if (mode == "ar") store.arSelected() else store.selected()) ?: error("角色库为空")
             h.load(role) {
                 if (realAr) h.node?.isVisible = false
                 h.zoom = stateScale * role.scale

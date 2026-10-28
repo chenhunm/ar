@@ -204,12 +204,13 @@ class MainActivity : ComponentActivity() {
         page = "roles"
         val col = layout("角色管理")
         col.addView(Ui.button(this, "导入 GLB / VRM 文件") { filePicker.launch(arrayOf("*/*")) })
+        col.addView(Ui.secondary(this, "导入 FBX / PMX / PMD / XPS / OBJ / 旧版 Blender") { filePicker.launch(arrayOf("*/*")) })
         col.addView(Ui.secondary(this, "导入 ZIP / 7z 压缩包") { filePicker.launch(arrayOf("*/*")) })
         col.addView(Ui.secondary(this, "导入 GLTF 及关联资源目录") { treePicker.launch(null) })
         col.addView(
             Ui.text(
                 this,
-                "单个模型及关联资源合计 ≤64 MB；纹理 ≤4096²、总像素 ≤3200 万；顶点 ≤75 万。VRM 支持基础 PBR 显示与可识别的表情，不含 MToon、头发物理与布料碰撞。",
+                "ZIP / 7z 可直接导入单个模型和贴图；FBX、MMD 与 XPS 转为基础三维材质，IK、物理和专用着色不保留。旧版 Blender 为有限兼容，现代 .blend、Live2D 和 MD 工程请先导出可用的三维模型。单个模型及关联资源合计 ≤64 MB；纹理 ≤4096²、总像素 ≤3200 万；顶点 ≤75 万。VRM 支持基础 PBR 显示与可识别的表情，不含 MToon、头发物理与布料碰撞。",
                 13f,
                 Ui.muted,
             )
@@ -219,7 +220,7 @@ class MainActivity : ComponentActivity() {
                 Ui.card(
                     this,
                     "${if(store.selected()?.id==r.id) "✓ " else ""}${r.name}",
-                    "${if(r.builtin) "内置原创角色" else "导入角色"} · ${r.animations.size} 个动作${if(r.warning.isBlank()) "" else "\n${r.warning}"}",
+                    "${if(r.id=="user-default") "用户提供模型" else if(r.builtin) "内置原创角色" else "导入角色"} · ${r.animations.size} 个动作${if(r.warning.isBlank()) "" else "\n${r.warning}"}",
                 ) {
                     roleDialog(r)
                 }

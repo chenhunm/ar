@@ -46,8 +46,10 @@ object RigMotion {
         for (i in 0 until nodes.length()) {
             val raw = nodes.getJSONObject(i).optString("name")
             val n = raw.lowercase().replace(Regex("[^a-z0-9]"), "").removePrefix("mixamorig")
-            val key =
-                when (n) {
+            val japanese = mapOf("下半身" to "hips", "上半身" to "spine", "上半身2" to "chest", "頭" to "head",
+                "左腕" to "upperArmLeft", "右腕" to "upperArmRight", "左ひじ" to "lowerArmLeft", "右ひじ" to "lowerArmRight",
+                "左足" to "upperLegLeft", "右足" to "upperLegRight", "左ひざ" to "lowerLegLeft", "右ひざ" to "lowerLegRight")
+            val key = japanese[raw] ?: when (n) {
                     "hips",
                     "pelvis" -> "hips"
                     "spine" -> "spine"
@@ -484,3 +486,4 @@ object RigMotion {
         }
     }
 }
+

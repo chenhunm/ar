@@ -80,20 +80,30 @@ class RoleStore(val context: Context) {
     fun ensureBuiltins() = synchronized(globalLock) {
         val list=roles().toMutableList()
         val revisions=mutableMapOf<String,String>()
-        for((id,name) in listOf("qing" to "青禾 · 人形","momo" to "团子 · Q版")) {
-            val bytes=context.assets.open("models/$id.glb").use{it.readBytes()}
+        val builtins = mutableListOf(Triple("qing","青禾 · 人形","qing.glb"), Triple("momo","团子 · Q版","momo.glb"))
+        if (context.assets.list("models")?.contains("user-default.7z") == true)
+            builtins += Triple("user-default", "自定义默认角色", "user-default.7z")
+        for((id,name,asset) in builtins) {
+            val bytes=context.assets.open("models/$asset").use{it.readBytes()}
             val revision=java.security.MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)}
             val key="builtinRevision.$id"
             val index=list.indexOfFirst{it.id==id}
             if(index<0 || prefs.getString(key,null)!=revision) {
-                val result=ModelCodec.convert(bytes)
+                val result=if (asset.endsWith(".7z")) {
+                    val temporary=File(context.cacheDir,"builtin-${UUID.randomUUID()}").apply{mkdirs()}
+                    try {
+                        val input=File(temporary,"input.7z").apply{writeBytes(bytes)}
+                        val model=ModelArchive.models(input,File(temporary,"expanded")).single()
+                        ModelCodec.convert(model.readBytes())
+                    } finally {temporary.deleteRecursively()}
+                } else ModelCodec.convert(bytes)
                 val filename="$id.glb"
                 val temporary=File(dir,"$filename.tmp")
                 temporary.writeBytes(result.bytes)
                 check(temporary.renameTo(File(dir,filename))){"内置角色更新失败"}
                 val old=list.getOrNull(index)
                 val updated=old?.copy(file=filename,animations=result.animations,warning=result.warning,builtin=true)
-                    ?: Role(id,name,filename,animations=result.animations,builtin=true)
+                    ?: Role(id,name,filename,animations=result.animations,warning=result.warning,builtin=true)
                 if(index<0)list+=updated else list[index]=updated
             }
             revisions[key]=revision
@@ -107,8 +117,14 @@ class RoleStore(val context: Context) {
         return list.find { it.id == prefs.getString("role", "qing") } ?: list.firstOrNull()
     }
 
+    fun arSelected(): Role? {
+        val list=roles()
+        val id=prefs.getString("arRole",null)
+        return list.find { it.id == id } ?: list.find { it.id == "user-default" } ?: selected()
+    }
+
     fun select(role: Role) {
-        prefs.edit().putString("role", role.id).apply()
+        prefs.edit().putString("role", role.id).putString("arRole",role.id).apply()
     }
 
     fun file(role: Role) = File(dir, role.file)
@@ -150,7 +166,7 @@ class RoleStore(val context: Context) {
                         it.getString(it.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
                     else "导入角色"
                 } ?: "导入角色"
-        require(name.substringAfterLast('.').lowercase() in listOf("glb", "vrm", "gltf", "zip", "7z")) {
+        require(name.substringAfterLast('.').lowercase() in (listOf("glb", "vrm", "gltf", "zip", "7z") + NativeModelCodec.extensions + LegacyModelCodec.extensions)) {
             "请选择 GLB / VRM / ZIP / 7z；GLTF 关联资源可放入压缩包"
         }
         val b = readLimited(context.contentResolver.openInputStream(uri) ?: error("无法读取文件"))
@@ -162,6 +178,18 @@ class RoleStore(val context: Context) {
                 val files = ModelArchive.models(archive, File(temporary,"expanded"))
                 require(files.size == 1) { "压缩包包含 ${files.size} 个模型，请分别打包或使用目录导入" }
                 val model = files.single()
+                if (model.extension.lowercase() in LegacyModelCodec.extensions) {
+                    val result=LegacyModelCodec.convert(model.name,model.readBytes()) {path->
+                        val resource=File(model.parentFile,ModelCodec.safePath(path))
+                        require(resource.canonicalPath.startsWith(temporary.canonicalPath+File.separator))
+                        readLimited(resource.inputStream())
+                    }
+                    return importBytes(model.nameWithoutExtension+".glb",result)
+                }
+                if (model.extension.lowercase() in NativeModelCodec.extensions) {
+                    val converted=NativeModelCodec.convert(context,model,temporary)
+                    return importBytes(model.nameWithoutExtension+".glb",converted)
+                }
                 return importBytes(model.name, readLimited(model.inputStream())) { path ->
                     val resource = File(model.parentFile, ModelCodec.safePath(path))
                     require(resource.canonicalPath.startsWith(model.parentFile!!.canonicalPath + File.separator))
@@ -177,6 +205,16 @@ class RoleStore(val context: Context) {
         bytes: ByteArray,
         resolver: (String) -> ByteArray = { error("缺少关联资源 $it，请使用 GLTF 目录导入") },
     ): Role {
+        if (name.substringAfterLast('.').lowercase() in LegacyModelCodec.extensions) {
+            return importBytes(name.substringBeforeLast('.')+".glb",LegacyModelCodec.convert(name,bytes,resolver))
+        }
+        if (name.substringAfterLast('.').lowercase() in NativeModelCodec.extensions) {
+            val temporary=File(context.cacheDir,"native-${UUID.randomUUID()}").apply {mkdirs()}
+            try {
+                val source=File(temporary,"source."+name.substringAfterLast('.').lowercase()).apply {writeBytes(bytes)}
+                return importBytes(name.substringBeforeLast('.')+".glb",NativeModelCodec.convert(context,source,temporary))
+            } finally {temporary.deleteRecursively()}
+        }
         val r = ModelCodec.convert(bytes, resolver)
         val id = UUID.randomUUID().toString()
         val filename = "$id.glb"
