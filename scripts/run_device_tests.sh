@@ -29,7 +29,9 @@ logcat_pid=$!
 "$adb_bin" shell am force-stop com.huanban.ar
 "$adb_bin" shell pm revoke com.huanban.ar android.permission.CAMERA || true
 "$adb_bin" shell appops set com.huanban.ar SYSTEM_ALERT_WINDOW deny
-"$adb_bin" shell am instrument -w -r -e class com.huanban.ar.AppRegressionTest,com.huanban.ar.NativeIntegrationTest com.huanban.ar.test/androidx.test.runner.AndroidJUnitRunner 2>&1 | tee evidence/device/instrumentation.txt
+# A blocked native/UI thread must still yield logs instead of consuming the
+# entire CI job. This is a suite timeout; individual measured modes need 60s.
+timeout --signal=TERM --kill-after=30s 20m "$adb_bin" shell am instrument -w -r -e class com.huanban.ar.AppRegressionTest,com.huanban.ar.NativeIntegrationTest com.huanban.ar.test/androidx.test.runner.AndroidJUnitRunner 2>&1 | tee evidence/device/instrumentation.txt
 python3 - <<'PY'
 import pathlib,re,sys
 log=pathlib.Path('evidence/device/instrumentation.txt').read_text()

@@ -1,0 +1,19 @@
+2026-10-28T02:33:53.2532666Z BUILD SUCCESSFUL in 4m 11s
+grep '^disk.dataPartition.size=' "$ANDROID_AVD_HOME/test.avd/config.ini"
+2026-10-28T02:34:01.9134319Z disable Linux hardware acceleration: false
+2026-10-28T02:34:01.9152355Z grep '^disk.dataPartition.size=' "$ANDROID_AVD_HOME/test.avd/config.ini"
+2026-10-28T02:35:14.7987396Z [command]/usr/bin/sh -c \printf 'hw.cpu.ncore=2\nhw.ramSize=2048M\ndisk.dataPartition.size=2048M\n' >> /home/runner/.android/avd/test.avd/config.ini
+2026-10-28T02:35:14.8436243Z [command]/usr/bin/sh -c grep '^disk.dataPartition.size=' "$ANDROID_AVD_HOME/test.avd/config.ini"
+2026-10-28T02:35:14.8461827Z disk.dataPartition.size=800M
+2026-10-28T02:35:14.8463539Z disk.dataPartition.size=2048M
+2026-10-28T02:35:14.9042555Z FATAL        | Not enough space to create userdata partition. Available: 7331.29 MB at /home/runner/.android/avd/test.avd, need 7372.80 MB.
+2026-10-28T02:40:16.5011770Z ##[error]Timeout waiting for emulator to boot.
+2026-10-28T02:40:42.3011883Z BUILD SUCCESSFUL in 15s
+2026-10-28T02:40:44.6321335Z Saved cache entry with key gradle-kotlin-dsl-v1-ba4faebfc58765cc555d6e2ec982a5ea from /home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/,/home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/ in 1080ms
+2026-10-28T02:40:44.8066812Z Saved cache entry with key gradle-instrumented-jars-v1-d5702ae08d0bd320c0a3a336feae19a8 from /home/runner/.gradle/caches/jars-*/*/ in 1300ms
+2026-10-28T02:40:44.8212645Z Saved cache entry with key gradle-groovy-dsl-v1-6a97b93a9d35ba52fc94a4d8412a426d from /home/runner/.gradle/caches/*/groovy-dsl/*/ in 1195ms
+2026-10-28T02:40:46.5003865Z Saved cache entry with key gradle-wrapper-zips-v1-df6ecc383658ce44d9cbac4d1bfd12bf from /home/runner/.gradle/wrapper/dists/gradle-8.9-bin/90cnw93cvbtalezasaz0blq0a in 3882ms
+2026-10-28T02:40:47.9607287Z Saved cache entry with key gradle-dependencies-v1-822a15e2f795c078c926ba373d86d68a from /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 4510ms
+2026-10-28T02:40:54.0709843Z Saved cache entry with key gradle-transforms-v1-06e471f743379cf08aa146b592bae425 from /home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/ in 9592ms
+2026-10-28T02:40:57.6057497Z Saved cache entry with key gradle-generated-gradle-jars-v1-26cfecc158c44513d188405a5d2d0d9c from /home/runner/.gradle/caches/8.9/generated-gradle-jars/gradle-api-8.9.jar in 14988ms
+2026-10-28T02:40:58.6789264Z Saved cache entry with key gradle-home-v1|Linux-X64|verify[2ed18988c4f771f7686b06b21c5bbe16]-3b68febaae591d945204397889b52bdc26ac0e16 from /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 1052ms
