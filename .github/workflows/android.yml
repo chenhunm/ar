@@ -37,6 +37,13 @@ jobs:
         run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
       - name: Lint, JVM tests and APK builds
         run: set -o pipefail; ./gradlew --no-daemon --max-workers=2 lintDebug testDebugUnitTest assembleDebug assembleDebugAndroidTest 2>&1 | tee build.log
+      - name: Encrypt authorized debug signing backup
+        run: python3 scripts/export_debug_signing.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: huanban-encrypted-debug-signing
+          retention-days: 14
+          path: signing-export/
       - uses: actions/upload-artifact@v4
         if: always()
         with:
