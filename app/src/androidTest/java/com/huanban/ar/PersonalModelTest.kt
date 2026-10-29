@@ -95,6 +95,8 @@ class PersonalModelTest {
             context.checkUriPermission(uri,android.os.Process.myPid(),android.os.Process.myUid(),Intent.FLAG_GRANT_READ_URI_PERMISSION)==android.content.pm.PackageManager.PERMISSION_GRANTED
         }
         val imported=store.importFile(uri)
+        val petPrefs=context.getSharedPreferences("pet",0)
+        val previousPetSize=if(petPrefs.contains("size"))petPrefs.getInt("size",280)else null
         try {
             assertTrue(store.file(imported).length()>10000000)
             assertTrue(imported.animations.size>=7)
@@ -103,6 +105,10 @@ class PersonalModelTest {
             device.executeShellCommand("appops set com.huanban.ar SYSTEM_ALERT_WINDOW allow")
             context.startActivity(Intent(context,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
             waitFor("桌宠前台入口",45000){device.hasObject(By.desc("AR 模式"))}
+            // The pixel threshold was established at 340dp. NativeIntegrationTest
+            // previously left this size behind after two resize actions. Make
+            // the viewport explicit so this test also works independently.
+            petPrefs.edit().putInt("size",340).commit()
             ins.runOnMainSync{context.startForegroundService(Intent(context,PetService::class.java).setAction("show"))}
             waitFor("用户桌宠模型加载"){PetService.current.get()?.let{(field(it,"host") as? RenderHost)?.node!=null}==true}
             val service=PetService.current.get()!!
@@ -112,6 +118,9 @@ class PersonalModelTest {
         } finally {
             ins.runOnMainSync{context.stopService(Intent(context,PetService::class.java))}
             waitFor("用户桌宠资源释放",45000){PetService.current.get()==null}
+            petPrefs.edit().apply {
+                if(previousPetSize==null)remove("size")else putInt("size",previousPetSize)
+            }.commit()
             store.select(store.roles().first{it.id=="qing"})
             store.delete(imported)
         }
