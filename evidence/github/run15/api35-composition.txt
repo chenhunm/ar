@@ -1,0 +1,2 @@
+qa-video-ar-display API=35 Result(background=10138, matchedBackground=10138, skin=305, matchedSkin=305) backgroundRatio=1.0 skinRatio=1.0
+qa-video-ar-composite API=35 Result(background=10136, matchedBackground=10136, skin=305, matchedSkin=305) backgroundRatio=1.0 skinRatio=1.0

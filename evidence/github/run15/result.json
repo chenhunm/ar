@@ -1,0 +1,13 @@
+{
+  "run": 40731275880,
+  "code": "739c89ef7596e4a771a06c7b2ccb5ef7f3dcaf17",
+  "build": "success",
+  "jvmTests": 40,
+  "android30UI": 14,
+  "android35UI": 14,
+  "android30Native": 9,
+  "android35Native": 9,
+  "allSucceeded": true,
+  "userModelPackaged": false,
+  "redmiK80Tested": false
+}

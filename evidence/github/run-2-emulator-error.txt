@@ -1,0 +1,6 @@
+2026-10-28T02:15:38.4516957Z BUILD SUCCESSFUL in 5m 23s
+2026-10-28T02:15:38.7798740Z disable Linux hardware acceleration: false
+2026-10-28T02:16:28.5034588Z INFO         | Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)
+2026-10-28T02:16:28.5544673Z FATAL        | Not enough space to create userdata partition. Available: 7328.17 MB at /home/runner/.android/avd/test.avd, need 7372.80 MB.
+2026-10-28T02:26:31.4719444Z ##[error]Timeout waiting for emulator to boot.
+2026-10-28T02:26:35.5868331Z Artifact download URL: https://github.com/chenhunm/ar/actions/runs/40619292036/artifacts/12787013391

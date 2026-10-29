@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.huanban.ar.ModelCodecTest" tests="29" skipped="0" failures="0" errors="0" timestamp="2026-10-28T00:31:51" hostname="992ba5fa9330" time="0.559">
+  <properties/>
+  <testcase name="missingGltfResourceRejected" classname="com.huanban.ar.ModelCodecTest" time="0.135"/>
+  <testcase name="backgroundAppSwitchDoesNotHideForegroundPet" classname="com.huanban.ar.ModelCodecTest" time="0.001"/>
+  <testcase name="glesUniformBufferDevicesAreNotRejectedByStandaloneUniformCount" classname="com.huanban.ar.ModelCodecTest" time="0.004"/>
+  <testcase name="requiredCompressionRejectedClearly" classname="com.huanban.ar.ModelCodecTest" time="0.015"/>
+  <testcase name="quaternionCompositionStaysNormalized" classname="com.huanban.ar.ModelCodecTest" time="0.004"/>
+  <testcase name="corruptHeaderRejected" classname="com.huanban.ar.ModelCodecTest" time="0.001"/>
+  <testcase name="truncatedChunkRejected" classname="com.huanban.ar.ModelCodecTest" time="0.001"/>
+  <testcase name="unsupportedVersionRejected" classname="com.huanban.ar.ModelCodecTest" time="0.0"/>
+  <testcase name="unsafePathsRejected" classname="com.huanban.ar.ModelCodecTest" time="0.002"/>
+  <testcase name="tPoseArmsAreRetargetedToDownwardRest" classname="com.huanban.ar.ModelCodecTest" time="0.071"/>
+  <testcase name="meshNodeReferenceOverrunRejected" classname="com.huanban.ar.ModelCodecTest" time="0.013"/>
+  <testcase name="externalGltfResourcesBundled" classname="com.huanban.ar.ModelCodecTest" time="0.036"/>
+  <testcase name="originalRolesHaveSkinsAndGeneratedJointAnimations" classname="com.huanban.ar.ModelCodecTest" time="0.074"/>
+  <testcase name="cyclicRigRejected" classname="com.huanban.ar.ModelCodecTest" time="0.009"/>
+  <testcase name="vrm0MappingSupported" classname="com.huanban.ar.ModelCodecTest" time="0.03"/>
+  <testcase name="capableSwiftShaderDriverIsNotBlanketBlocked" classname="com.huanban.ar.ModelCodecTest" time="0.001"/>
+  <testcase name="bufferOverrunRejected" classname="com.huanban.ar.ModelCodecTest" time="0.006"/>
+  <testcase name="emptyRejected" classname="com.huanban.ar.ModelCodecTest" time="0.001"/>
+  <testcase name="noSkinStillDisplaysWithoutGeneratedMotion" classname="com.huanban.ar.ModelCodecTest" time="0.011"/>
+  <testcase name="knownSwiftShader4FailureIsDetected" classname="com.huanban.ar.ModelCodecTest" time="0.0"/>
+  <testcase name="invalidChildRejected" classname="com.huanban.ar.ModelCodecTest" time="0.007"/>
+  <testcase name="embeddedBufferSupported" classname="com.huanban.ar.ModelCodecTest" time="0.028"/>
+  <testcase name="wrongJsonVersionRejected" classname="com.huanban.ar.ModelCodecTest" time="0.001"/>
+  <testcase name="invalidSkinJointReferenceRejected" classname="com.huanban.ar.ModelCodecTest" time="0.008"/>
+  <testcase name="oversizedFileRejected" classname="com.huanban.ar.ModelCodecTest" time="0.066"/>
+  <testcase name="packRoundTripPreservesBinary" classname="com.huanban.ar.ModelCodecTest" time="0.012"/>
+  <testcase name="matrixRigDoesNotReceiveUnsafeGeneratedClips" classname="com.huanban.ar.ModelCodecTest" time="0.009"/>
+  <testcase name="accessorOverrunRejected" classname="com.huanban.ar.ModelCodecTest" time="0.005"/>
+  <testcase name="escapedResourcePathsSupported" classname="com.huanban.ar.ModelCodecTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

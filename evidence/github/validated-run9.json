@@ -1,0 +1,41 @@
+{
+  "run": 40639249517,
+  "codeCommit": "f227a941cfb5902e72080ac3f3a0213ffe190662",
+  "apkSha256": "42708e3f0440a3c01b3ef52503b9bbcf4c557a19124dda77f44adeb9956645f7",
+  "jvm": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0
+  },
+  "device": [
+    {
+      "id": 122654189606,
+      "name": "API30_UI",
+      "expected": 14,
+      "passed": 14,
+      "line": "2026-10-28T05:46:07.3409873Z OK (14 tests)"
+    },
+    {
+      "id": 122654189645,
+      "name": "API30_NATIVE",
+      "expected": 6,
+      "passed": 6,
+      "line": "2026-10-28T05:48:43.3187718Z OK (6 tests)"
+    },
+    {
+      "id": 122654189697,
+      "name": "API35_UI",
+      "expected": 14,
+      "passed": 14,
+      "line": "2026-10-28T05:47:56.3095501Z OK (14 tests)"
+    },
+    {
+      "id": 122654189789,
+      "name": "API35_NATIVE",
+      "expected": 6,
+      "passed": 6,
+      "line": "2026-10-28T05:49:38.8180406Z OK (6 tests)"
+    }
+  ],
+  "display": "480x800 @ 160 dpi; software x86_64; not K80"
+}

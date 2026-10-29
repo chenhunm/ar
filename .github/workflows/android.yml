@@ -1,0 +1,137 @@
+name: Android build and regression
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**/*.md', 'evidence/**', 'SHA256SUMS.txt', 'LICENSE']
+  pull_request:
+    branches: [main]
+    paths-ignore: ['**/*.md', 'evidence/**', 'SHA256SUMS.txt', 'LICENSE']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
+      - name: Reserve native build disk on disposable hosted runner
+        run: |
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$ANDROID_HOME" = /usr/local/lib/android/sdk
+          sudo rm -rf /usr/share/dotnet "$ANDROID_HOME/ndk"
+          df -h .
+      - name: Install compile SDK and NDK
+        run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
+      - name: Prepare exportable debug signing identity
+        run: |
+          mkdir -p signing
+          keytool -genkeypair -keystore signing/huanban-debug.keystore -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=HuanBanAR,C=CN" > /dev/null 2>&1
+      - name: Lint, JVM tests and APK builds
+        run: set -o pipefail; ./gradlew --no-daemon --max-workers=2 lintDebug testDebugUnitTest assembleDebug assembleDebugAndroidTest 2>&1 | tee build.log
+      - name: Encrypt authorized debug signing backup
+        run: python3 scripts/export_debug_signing.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: huanban-encrypted-debug-signing
+          retention-days: 14
+          path: signing-export/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: huanban-build-apk-reports
+          retention-days: 14
+          path: |
+            app/build/outputs/apk/
+            app/build/reports/
+            app/build/test-results/
+            build.log
+  device:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {api: 30, target: default, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
+          - {api: 30, target: default, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest,com.huanban.ar.DeviceCompatibilityTest", expected: 13}
+          - {api: 35, target: google_apis, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
+          - {api: 35, target: google_apis, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest,com.huanban.ar.DeviceCompatibilityTest", expected: 13}
+          - {api: 36, target: google_apis, suite: compat, test_class: "com.huanban.ar.PersonalModelTest,com.huanban.ar.DeviceCompatibilityTest", expected: 4}
+    name: Android ${{ matrix.api }} / ${{ matrix.suite }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: huanban-build-apk-reports
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Reserve emulator disk on disposable hosted runner
+        run: |
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$ANDROID_HOME" = /usr/local/lib/android/sdk
+          # Only unused software in this disposable GitHub VM is removed.
+          sudo rm -rf /usr/share/dotnet "$ANDROID_HOME/ndk"
+          df -h .
+          python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 10*1024**3, "Emulator needs disk headroom"'
+      - name: Install emulator image with bounded download retries
+        timeout-minutes: 8
+        env:
+          TEST_API: ${{ matrix.api }}
+          TEST_TARGET: ${{ matrix.target }}
+        run: |
+          for attempt in 1 2 3; do
+            if sdkmanager "emulator" "system-images;android-${TEST_API};${TEST_TARGET};x86_64"; then exit 0; fi
+            echo "SDK image download attempt $attempt failed"
+          done
+          exit 1
+      - uses: reactivecircus/android-emulator-runner@v2
+        env:
+          HUANBAN_TEST_CLASS: ${{ matrix.test_class }}
+          HUANBAN_EXPECTED_TESTS: ${{ matrix.expected }}
+        with:
+          api-level: ${{ matrix.api }}
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          disk-size: 2048M
+          emulator-boot-timeout: 300
+          disable-animations: true
+          pre-emulator-launch-script: |
+            python3 scripts/configure_ci_display.py "$ANDROID_AVD_HOME/test.avd/config.ini"
+            df -h .
+            python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 9*1024**3, "Insufficient emulator disk headroom"'
+          emulator-options: -no-window -skin 480x800 -gpu swangle -no-audio -no-boot-anim -no-snapshot -camera-back emulated
+          script: |
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+            bash scripts/run_device_tests.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: huanban-device-${{ matrix.api }}-${{ matrix.suite }}
+          retention-days: 14
+          path: evidence/device/

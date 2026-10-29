@@ -1,0 +1,1024 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:checkKotlinGradlePluginConfigurationErrors
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResValues
+> Task :app:checkDebugAarMetadata
+> Task :app:mapDebugSourceSetPaths
+> Task :app:generateDebugResources
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:mergeDebugResources
+> Task :app:processDebugMainManifest
+> Task :app:packageDebugResources
+> Task :app:parseDebugLocalResources
+> Task :app:processDebugManifest
+> Task :app:javaPreCompileDebug
+> Task :app:processDebugManifestForPackage
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :app:generateDebugAndroidTestResValues
+> Task :app:extractProguardFiles
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:mergeDebugShaders
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
+> Task :app:desugarDebugFileDependencies
+> Task :app:processDebugResources
+> Task :app:checkDebugDuplicateClasses
+> Task :app:mergeExtDexDebug
+> Task :app:mergeLibDexDebug
+
+> Task :app:configureCMakeDebug[arm64-v8a]
+C/C++: INFO Hunter enabled or RT-extension not found. glTF import/export will be built without Open3DGC-compression.
+
+> Task :app:compileDebugKotlin
+w: file:///home/runner/work/ar/ar/app/src/main/java/com/huanban/ar/ResourcePolicy.kt:8:38 'TRIM_MEMORY_RUNNING_CRITICAL: Int' is deprecated. Deprecated in Java
+w: file:///home/runner/work/ar/ar/app/src/main/java/com/huanban/ar/ResourcePolicy.kt:9:42 'TRIM_MEMORY_MODERATE: Int' is deprecated. Deprecated in Java
+w: file:///home/runner/work/ar/ar/app/src/main/java/com/huanban/ar/RigMotion.kt:283:25 Name shadowed: rest
+
+> Task :app:buildCMakeDebug[arm64-v8a]
+C/C++: ninja: Entering directory `/home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a'
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/adler32.c:63:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    63 | uLong ZEXPORT adler32_z(adler, buf, len)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/adler32.c:134:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   134 | uLong ZEXPORT adler32(adler, buf, len)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/adler32.c:143:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   143 | local uLong adler32_combine_(adler1, adler2, len2)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/adler32.c:172:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   172 | uLong ZEXPORT adler32_combine(adler1, adler2, len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/adler32.c:180:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   180 | uLong ZEXPORT adler32_combine64(adler1, adler2, len2)
+C/C++:       |               ^
+C/C++: 5 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/compress.c:22:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    22 | int ZEXPORT compress2(dest, destLen, source, sourceLen, level)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/compress.c:68:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    68 | int ZEXPORT compress(dest, destLen, source, sourceLen)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/compress.c:81:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    81 | uLong ZEXPORT compressBound(sourceLen)
+C/C++:       |               ^
+C/C++: 3 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:126:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   126 | local z_word_t byte_swap(word)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:551:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   551 | local z_crc_t multmodp(a, b)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:575:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   575 | local z_crc_t x2nmodp(n, k)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:726:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   726 | local z_crc_t crc_word(data)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:735:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   735 | local z_word_t crc_word_big(data)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:748:23: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   748 | unsigned long ZEXPORT crc32_z(crc, buf, len)
+C/C++:       |                       ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:1072:23: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1072 | unsigned long ZEXPORT crc32(crc, buf, len)
+C/C++:       |                       ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:1081:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1081 | uLong ZEXPORT crc32_combine64(crc1, crc2, len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:1093:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1093 | uLong ZEXPORT crc32_combine(crc1, crc2, len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:1102:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1102 | uLong ZEXPORT crc32_combine_gen64(len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:1112:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1112 | uLong ZEXPORT crc32_combine_gen(len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/crc32.c:1119:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1119 | uLong ZEXPORT crc32_combine_op(crc1, crc2, op)
+C/C++:       |               ^
+C/C++: 12 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:198:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   198 | local void slide_hash(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:225:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   225 | int ZEXPORT deflateInit_(strm, level, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:237:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   237 | int ZEXPORT deflateInit2_(strm, level, method, windowBits, memLevel, strategy,
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:389:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   389 | local int deflateStateCheck(strm)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:412:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   412 | int ZEXPORT deflateSetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:481:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   481 | int ZEXPORT deflateGetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:503:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   503 | int ZEXPORT deflateResetKeep(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:541:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   541 | int ZEXPORT deflateReset(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:553:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   553 | int ZEXPORT deflateSetHeader(strm, head)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:564:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   564 | int ZEXPORT deflatePending(strm, pending, bits)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:578:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   578 | int ZEXPORT deflatePrime(strm, bits, value)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:605:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   605 | int ZEXPORT deflateParams(strm, level, strategy)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:654:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   654 | int ZEXPORT deflateTune(strm, good_length, max_lazy, nice_length, max_chain)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:696:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   696 | uLong ZEXPORT deflateBound(strm, sourceLen)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:768:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   768 | local void putShortMSB(s, b)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:782:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   782 | local void flush_pending(strm)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:815:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   815 | int ZEXPORT deflate(strm, flush)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1130:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1130 | int ZEXPORT deflateEnd(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1156:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1156 | int ZEXPORT deflateCopy(dest, source)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1215:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1215 | local unsigned read_buf(strm, buf, size)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1245:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1245 | local void lm_init(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1278:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1278 | local uInt longest_match(s, cur_match)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1527:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1527 | local void fill_window(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1690:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1690 | local block_state deflate_stored(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1877:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1877 | local block_state deflate_fast(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:1979:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1979 | local block_state deflate_slow(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:2110:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  2110 | local block_state deflate_rle(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/deflate.c:2184:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  2184 | local block_state deflate_huff(s, flush)
+C/C++:       |                   ^
+C/C++: 28 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzclose.c:11:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    11 | int ZEXPORT gzclose(file)
+C/C++:       |             ^
+C/C++: 1 warning generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:75:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    75 | local void gz_reset(state)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:93:14: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    93 | local gzFile gz_open(path, fd, mode)
+C/C++:       |              ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:272:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   272 | gzFile ZEXPORT gzopen(path, mode)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:280:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   280 | gzFile ZEXPORT gzopen64(path, mode)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:288:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   288 | gzFile ZEXPORT gzdopen(fd, mode)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:318:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   318 | int ZEXPORT gzbuffer(file, size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:345:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   345 | int ZEXPORT gzrewind(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:368:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   368 | z_off64_t ZEXPORT gzseek64(file, offset, whence)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:445:17: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   445 | z_off_t ZEXPORT gzseek(file, offset, whence)
+C/C++:       |                 ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:457:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   457 | z_off64_t ZEXPORT gztell64(file)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:474:17: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   474 | z_off_t ZEXPORT gztell(file)
+C/C++:       |                 ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:484:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   484 | z_off64_t ZEXPORT gzoffset64(file)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:507:17: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   507 | z_off_t ZEXPORT gzoffset(file)
+C/C++:       |                 ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:517:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   517 | int ZEXPORT gzeof(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:534:22: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   534 | const char * ZEXPORT gzerror(file, errnum)
+C/C++:       |                      ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:555:14: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   555 | void ZEXPORT gzclearerr(file)
+C/C++:       |              ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzlib.c:581:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   581 | void ZLIB_INTERNAL gz_error(state, err, msg)
+C/C++:       |                    ^
+C/C++: 17 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:21:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    21 | local int gz_load(state, buf, len, have)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:56:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    56 | local int gz_avail(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:91:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    91 | local int gz_look(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:173:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   173 | local int gz_decomp(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:227:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   227 | local int gz_fetch(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:257:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   257 | local int gz_skip(state, len)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:292:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   292 | local z_size_t gz_read(state, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:373:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   373 | int ZEXPORT gzread(file, buf, len)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:409:18: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   409 | z_size_t ZEXPORT gzfread(buf, size, nitems, file)
+C/C++:       |                  ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:445:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   445 | int ZEXPORT gzgetc(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:472:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   472 | int ZEXPORT gzgetc_(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:479:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   479 | int ZEXPORT gzungetc(c, file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:539:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   539 | char * ZEXPORT gzgets(file, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:603:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   603 | int ZEXPORT gzdirect(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzread.c:623:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   623 | int ZEXPORT gzclose_r(file)
+C/C++:       |             ^
+C/C++: 15 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:17:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    17 | local int gz_init(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:73:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    73 | local int gz_comp(state, flush)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:154:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   154 | local int gz_zero(state, len)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:187:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   187 | local z_size_t gz_write(state, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:255:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   255 | int ZEXPORT gzwrite(file, buf, len)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:283:18: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   283 | z_size_t ZEXPORT gzfwrite(buf, size, nitems, file)
+C/C++:       |                  ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:313:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   313 | int ZEXPORT gzputc(file, c)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:361:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   361 | int ZEXPORT gzputs(file, s)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:565:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   565 | int ZEXPORT gzflush(file, flush)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:597:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   597 | int ZEXPORT gzsetparams(file, level, strategy)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/gzwrite.c:639:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   639 | int ZEXPORT gzclose_w(file)
+C/C++:       |             ^
+C/C++: 11 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/infback.c:28:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    28 | int ZEXPORT inflateBackInit_(strm, windowBits, window, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/infback.c:83:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    83 | local void fixedtables(state)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/infback.c:251:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   251 | int ZEXPORT inflateBack(strm, in, in_desc, out, out_desc)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/infback.c:635:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   635 | int ZEXPORT inflateBackEnd(strm)
+C/C++:       |             ^
+C/C++: 4 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:105:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   105 | local int inflateStateCheck(strm)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:119:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   119 | int ZEXPORT inflateResetKeep(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:145:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   145 | int ZEXPORT inflateReset(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:158:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   158 | int ZEXPORT inflateReset2(strm, windowBits)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:198:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   198 | int ZEXPORT inflateInit2_(strm, windowBits, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:242:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   242 | int ZEXPORT inflateInit_(strm, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:250:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   250 | int ZEXPORT inflatePrime(strm, bits, value)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:281:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   281 | local void fixedtables(state)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:399:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   399 | local int updatewindow(strm, end, copy)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:625:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   625 | int ZEXPORT inflate(strm, flush)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1304:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1304 | int ZEXPORT inflateEnd(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1318:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1318 | int ZEXPORT inflateGetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1341:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1341 | int ZEXPORT inflateSetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1376:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1376 | int ZEXPORT inflateGetHeader(strm, head)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1404:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1404 | local unsigned syncsearch(have, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1427:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1427 | int ZEXPORT inflateSync(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1485:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1485 | int ZEXPORT inflateSyncPoint(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1495:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1495 | int ZEXPORT inflateCopy(dest, source)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1542:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1542 | int ZEXPORT inflateUndermine(strm, subvert)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1560:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1560 | int ZEXPORT inflateValidate(strm, check)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1575:14: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1575 | long ZEXPORT inflateMark(strm)
+C/C++:       |              ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inflate.c:1588:23: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1588 | unsigned long ZEXPORT inflateCodesUsed(strm)
+C/C++:       |                       ^
+C/C++: 22 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inftrees.c:32:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    32 | int ZLIB_INTERNAL inflate_table(type, lens, codes, table, bits, work)
+C/C++:       |                   ^
+C/C++: 1 warning generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/inffast.c:50:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    50 | void ZLIB_INTERNAL inflate_fast(strm, start)
+C/C++:       |                    ^
+C/C++: 1 warning generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/uncompr.c:27:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    27 | int ZEXPORT uncompress2(dest, destLen, source, sourceLen)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/uncompr.c:86:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    86 | int ZEXPORT uncompress(dest, destLen, source, sourceLen)
+C/C++:       |             ^
+C/C++: 2 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:379:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   379 | void ZLIB_INTERNAL _tr_init(s)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:407:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   407 | local void init_block(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:451:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   451 | local void pqdownheap(s, tree, k)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:486:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   486 | local void gen_bitlen(s, desc)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:572:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   572 | local void gen_codes(tree, max_code, bl_count)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:615:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   615 | local void build_tree(s, desc)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:703:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   703 | local void scan_tree(s, tree, max_code)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:748:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   748 | local void send_tree(s, tree, max_code)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:799:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   799 | local int build_bl_tree(s)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:834:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   834 | local void send_all_trees(s, lcodes, dcodes, blcodes)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:863:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   863 | void ZLIB_INTERNAL _tr_stored_block(s, buf, stored_len, last)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:887:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   887 | void ZLIB_INTERNAL _tr_flush_bits(s)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:897:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   897 | void ZLIB_INTERNAL _tr_align(s)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:912:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   912 | void ZLIB_INTERNAL _tr_flush_block(s, buf, stored_len, last)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:1014:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1014 | int ZLIB_INTERNAL _tr_tally(s, dist, lc)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:1042:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1042 | local void compress_block(s, ltree, dtree)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:1102:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1102 | local int detect_data_type(s)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:1136:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1136 | local unsigned bi_reverse(code, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:1151:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1151 | local void bi_flush(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/trees.c:1168:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1168 | local void bi_windup(s)
+C/C++:       |            ^
+C/C++: 20 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/zutil.c:135:22: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   135 | const char * ZEXPORT zError(err)
+C/C++:       |                      ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/zutil.c:307:22: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   307 | voidpf ZLIB_INTERNAL zcalloc(opaque, items, size)
+C/C++:       |                      ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/arm64-v8a/_deps/assimp-src/contrib/zlib/zutil.c:317:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   317 | void ZLIB_INTERNAL zcfree(opaque, ptr)
+C/C++:       |                    ^
+C/C++: 3 warnings generated.
+
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:generateDebugLintReportModel
+> Task :app:generateDebugAndroidTestLintModel
+> Task :app:generateDebugUnitTestLintModel
+> Task :app:lintAnalyzeDebug
+> Task :app:lintAnalyzeDebugAndroidTest
+> Task :app:lintAnalyzeDebugUnitTest
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugJavaRes
+> Task :app:processDebugUnitTestJavaRes
+> Task :app:testDebugUnitTest
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics
+
+> Task :app:lintReportDebug
+Wrote HTML report to file:///home/runner/work/ar/ar/app/build/reports/lint-results-debug.html
+
+> Task :app:lintDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:mergeDebugJavaResource
+
+> Task :app:configureCMakeDebug[x86_64]
+C/C++: INFO Hunter enabled or RT-extension not found. glTF import/export will be built without Open3DGC-compression.
+
+> Task :app:buildCMakeDebug[x86_64]
+C/C++: ninja: Entering directory `/home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64'
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/adler32.c:63:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    63 | uLong ZEXPORT adler32_z(adler, buf, len)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/adler32.c:134:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   134 | uLong ZEXPORT adler32(adler, buf, len)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/adler32.c:143:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   143 | local uLong adler32_combine_(adler1, adler2, len2)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/adler32.c:172:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   172 | uLong ZEXPORT adler32_combine(adler1, adler2, len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/adler32.c:180:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   180 | uLong ZEXPORT adler32_combine64(adler1, adler2, len2)
+C/C++:       |               ^
+C/C++: 5 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/compress.c:22:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    22 | int ZEXPORT compress2(dest, destLen, source, sourceLen, level)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/compress.c:68:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    68 | int ZEXPORT compress(dest, destLen, source, sourceLen)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/compress.c:81:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    81 | uLong ZEXPORT compressBound(sourceLen)
+C/C++:       |               ^
+C/C++: 3 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:126:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   126 | local z_word_t byte_swap(word)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:551:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   551 | local z_crc_t multmodp(a, b)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:575:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   575 | local z_crc_t x2nmodp(n, k)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:726:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   726 | local z_crc_t crc_word(data)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:735:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   735 | local z_word_t crc_word_big(data)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:748:23: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   748 | unsigned long ZEXPORT crc32_z(crc, buf, len)
+C/C++:       |                       ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:1072:23: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1072 | unsigned long ZEXPORT crc32(crc, buf, len)
+C/C++:       |                       ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:1081:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1081 | uLong ZEXPORT crc32_combine64(crc1, crc2, len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:1093:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1093 | uLong ZEXPORT crc32_combine(crc1, crc2, len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:1102:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1102 | uLong ZEXPORT crc32_combine_gen64(len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:1112:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1112 | uLong ZEXPORT crc32_combine_gen(len2)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/crc32.c:1119:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1119 | uLong ZEXPORT crc32_combine_op(crc1, crc2, op)
+C/C++:       |               ^
+C/C++: 12 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:198:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   198 | local void slide_hash(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:225:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   225 | int ZEXPORT deflateInit_(strm, level, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:237:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   237 | int ZEXPORT deflateInit2_(strm, level, method, windowBits, memLevel, strategy,
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:389:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   389 | local int deflateStateCheck(strm)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:412:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   412 | int ZEXPORT deflateSetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:481:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   481 | int ZEXPORT deflateGetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:503:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   503 | int ZEXPORT deflateResetKeep(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:541:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   541 | int ZEXPORT deflateReset(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:553:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   553 | int ZEXPORT deflateSetHeader(strm, head)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:564:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   564 | int ZEXPORT deflatePending(strm, pending, bits)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:578:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   578 | int ZEXPORT deflatePrime(strm, bits, value)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:605:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   605 | int ZEXPORT deflateParams(strm, level, strategy)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:654:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   654 | int ZEXPORT deflateTune(strm, good_length, max_lazy, nice_length, max_chain)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:696:15: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   696 | uLong ZEXPORT deflateBound(strm, sourceLen)
+C/C++:       |               ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:768:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   768 | local void putShortMSB(s, b)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:782:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   782 | local void flush_pending(strm)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:815:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   815 | int ZEXPORT deflate(strm, flush)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1130:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1130 | int ZEXPORT deflateEnd(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1156:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1156 | int ZEXPORT deflateCopy(dest, source)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1215:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1215 | local unsigned read_buf(strm, buf, size)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1245:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1245 | local void lm_init(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1278:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1278 | local uInt longest_match(s, cur_match)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1527:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1527 | local void fill_window(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1690:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1690 | local block_state deflate_stored(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1877:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1877 | local block_state deflate_fast(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:1979:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1979 | local block_state deflate_slow(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:2110:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  2110 | local block_state deflate_rle(s, flush)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/deflate.c:2184:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  2184 | local block_state deflate_huff(s, flush)
+C/C++:       |                   ^
+C/C++: 28 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzclose.c:11:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    11 | int ZEXPORT gzclose(file)
+C/C++:       |             ^
+C/C++: 1 warning generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:75:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    75 | local void gz_reset(state)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:93:14: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    93 | local gzFile gz_open(path, fd, mode)
+C/C++:       |              ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:272:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   272 | gzFile ZEXPORT gzopen(path, mode)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:280:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   280 | gzFile ZEXPORT gzopen64(path, mode)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:288:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   288 | gzFile ZEXPORT gzdopen(fd, mode)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:318:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   318 | int ZEXPORT gzbuffer(file, size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:345:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   345 | int ZEXPORT gzrewind(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:368:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   368 | z_off64_t ZEXPORT gzseek64(file, offset, whence)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:445:17: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   445 | z_off_t ZEXPORT gzseek(file, offset, whence)
+C/C++:       |                 ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:457:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   457 | z_off64_t ZEXPORT gztell64(file)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:474:17: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   474 | z_off_t ZEXPORT gztell(file)
+C/C++:       |                 ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:484:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   484 | z_off64_t ZEXPORT gzoffset64(file)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:507:17: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   507 | z_off_t ZEXPORT gzoffset(file)
+C/C++:       |                 ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:517:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   517 | int ZEXPORT gzeof(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:534:22: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   534 | const char * ZEXPORT gzerror(file, errnum)
+C/C++:       |                      ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:555:14: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   555 | void ZEXPORT gzclearerr(file)
+C/C++:       |              ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzlib.c:581:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   581 | void ZLIB_INTERNAL gz_error(state, err, msg)
+C/C++:       |                    ^
+C/C++: 17 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:21:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    21 | local int gz_load(state, buf, len, have)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:56:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    56 | local int gz_avail(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:91:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    91 | local int gz_look(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:173:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   173 | local int gz_decomp(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:227:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   227 | local int gz_fetch(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:257:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   257 | local int gz_skip(state, len)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:292:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   292 | local z_size_t gz_read(state, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:373:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   373 | int ZEXPORT gzread(file, buf, len)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:409:18: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   409 | z_size_t ZEXPORT gzfread(buf, size, nitems, file)
+C/C++:       |                  ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:445:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   445 | int ZEXPORT gzgetc(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:472:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   472 | int ZEXPORT gzgetc_(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:479:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   479 | int ZEXPORT gzungetc(c, file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:539:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   539 | char * ZEXPORT gzgets(file, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:603:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   603 | int ZEXPORT gzdirect(file)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzread.c:623:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   623 | int ZEXPORT gzclose_r(file)
+C/C++:       |             ^
+C/C++: 15 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:17:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    17 | local int gz_init(state)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:73:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    73 | local int gz_comp(state, flush)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:154:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   154 | local int gz_zero(state, len)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:187:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   187 | local z_size_t gz_write(state, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:255:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   255 | int ZEXPORT gzwrite(file, buf, len)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:283:18: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   283 | z_size_t ZEXPORT gzfwrite(buf, size, nitems, file)
+C/C++:       |                  ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:313:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   313 | int ZEXPORT gzputc(file, c)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:361:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   361 | int ZEXPORT gzputs(file, s)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:565:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   565 | int ZEXPORT gzflush(file, flush)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:597:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   597 | int ZEXPORT gzsetparams(file, level, strategy)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/gzwrite.c:639:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   639 | int ZEXPORT gzclose_w(file)
+C/C++:       |             ^
+C/C++: 11 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:105:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   105 | local int inflateStateCheck(strm)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:119:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   119 | int ZEXPORT inflateResetKeep(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:145:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   145 | int ZEXPORT inflateReset(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:158:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   158 | int ZEXPORT inflateReset2(strm, windowBits)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:198:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   198 | int ZEXPORT inflateInit2_(strm, windowBits, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:242:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   242 | int ZEXPORT inflateInit_(strm, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:250:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   250 | int ZEXPORT inflatePrime(strm, bits, value)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:281:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   281 | local void fixedtables(state)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:399:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   399 | local int updatewindow(strm, end, copy)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:625:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   625 | int ZEXPORT inflate(strm, flush)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1304:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1304 | int ZEXPORT inflateEnd(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1318:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1318 | int ZEXPORT inflateGetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1341:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1341 | int ZEXPORT inflateSetDictionary(strm, dictionary, dictLength)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1376:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1376 | int ZEXPORT inflateGetHeader(strm, head)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1404:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1404 | local unsigned syncsearch(have, buf, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1427:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1427 | int ZEXPORT inflateSync(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1485:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1485 | int ZEXPORT inflateSyncPoint(strm)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1495:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1495 | int ZEXPORT inflateCopy(dest, source)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1542:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1542 | int ZEXPORT inflateUndermine(strm, subvert)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1560:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1560 | int ZEXPORT inflateValidate(strm, check)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1575:14: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1575 | long ZEXPORT inflateMark(strm)
+C/C++:       |              ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inflate.c:1588:23: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1588 | unsigned long ZEXPORT inflateCodesUsed(strm)
+C/C++:       |                       ^
+C/C++: 22 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/infback.c:28:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    28 | int ZEXPORT inflateBackInit_(strm, windowBits, window, version, stream_size)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/infback.c:83:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    83 | local void fixedtables(state)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/infback.c:251:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   251 | int ZEXPORT inflateBack(strm, in, in_desc, out, out_desc)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/infback.c:635:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   635 | int ZEXPORT inflateBackEnd(strm)
+C/C++:       |             ^
+C/C++: 4 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inftrees.c:32:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    32 | int ZLIB_INTERNAL inflate_table(type, lens, codes, table, bits, work)
+C/C++:       |                   ^
+C/C++: 1 warning generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/inffast.c:50:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    50 | void ZLIB_INTERNAL inflate_fast(strm, start)
+C/C++:       |                    ^
+C/C++: 1 warning generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:379:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   379 | void ZLIB_INTERNAL _tr_init(s)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:407:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   407 | local void init_block(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:451:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   451 | local void pqdownheap(s, tree, k)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:486:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   486 | local void gen_bitlen(s, desc)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:572:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   572 | local void gen_codes(tree, max_code, bl_count)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:615:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   615 | local void build_tree(s, desc)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:703:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   703 | local void scan_tree(s, tree, max_code)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:748:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   748 | local void send_tree(s, tree, max_code)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:799:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   799 | local int build_bl_tree(s)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:834:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   834 | local void send_all_trees(s, lcodes, dcodes, blcodes)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:863:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   863 | void ZLIB_INTERNAL _tr_stored_block(s, buf, stored_len, last)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:887:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   887 | void ZLIB_INTERNAL _tr_flush_bits(s)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:897:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   897 | void ZLIB_INTERNAL _tr_align(s)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:912:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   912 | void ZLIB_INTERNAL _tr_flush_block(s, buf, stored_len, last)
+C/C++:       |                    ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:1014:19: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1014 | int ZLIB_INTERNAL _tr_tally(s, dist, lc)
+C/C++:       |                   ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:1042:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1042 | local void compress_block(s, ltree, dtree)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:1102:11: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1102 | local int detect_data_type(s)
+C/C++:       |           ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:1136:16: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1136 | local unsigned bi_reverse(code, len)
+C/C++:       |                ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:1151:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1151 | local void bi_flush(s)
+C/C++:       |            ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/trees.c:1168:12: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:  1168 | local void bi_windup(s)
+C/C++:       |            ^
+C/C++: 20 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/uncompr.c:27:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    27 | int ZEXPORT uncompress2(dest, destLen, source, sourceLen)
+C/C++:       |             ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/uncompr.c:86:13: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:    86 | int ZEXPORT uncompress(dest, destLen, source, sourceLen)
+C/C++:       |             ^
+C/C++: 2 warnings generated.
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/zutil.c:135:22: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   135 | const char * ZEXPORT zError(err)
+C/C++:       |                      ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/zutil.c:307:22: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   307 | voidpf ZLIB_INTERNAL zcalloc(opaque, items, size)
+C/C++:       |                      ^
+C/C++: /home/runner/work/ar/ar/app/.cxx/Debug/n1o5q2a5/x86_64/_deps/assimp-src/contrib/zlib/zutil.c:317:20: warning: a function definition without a prototype is deprecated in all versions of C and is not supported in C23 [-Wdeprecated-non-prototype]
+C/C++:   317 | void ZLIB_INTERNAL zcfree(opaque, ptr)
+C/C++:       |                    ^
+C/C++: 3 warnings generated.
+
+> Task :app:mergeDebugJniLibFolders
+> Task :app:mergeDebugNativeLibs
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:checkDebugAndroidTestAarMetadata
+> Task :app:stripDebugDebugSymbols
+> Task :app:mapDebugAndroidTestSourceSetPaths
+> Task :app:generateDebugAndroidTestResources
+> Task :app:mergeDebugAndroidTestResources
+> Task :app:processDebugAndroidTestManifest
+> Task :app:processDebugAndroidTestResources
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+> Task :app:javaPreCompileDebugAndroidTest
+> Task :app:mergeDebugAndroidTestShaders
+> Task :app:compileDebugAndroidTestShaders NO-SOURCE
+> Task :app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :app:mergeDebugAndroidTestAssets
+> Task :app:compressDebugAndroidTestAssets
+> Task :app:desugarDebugAndroidTestFileDependencies
+> Task :app:checkDebugAndroidTestDuplicateClasses
+> Task :app:mergeExtDexDebugAndroidTest
+> Task :app:mergeLibDexDebugAndroidTest
+> Task :app:mergeDebugAndroidTestJniLibFolders
+> Task :app:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :app:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebugAndroidTest
+> Task :app:writeDebugAndroidTestSigningConfigVersions
+
+> Task :app:compileDebugAndroidTestKotlin
+w: file:///home/runner/work/ar/ar/app/src/androidTest/java/com/huanban/ar/NativeIntegrationTest.kt:410:38 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+w: file:///home/runner/work/ar/ar/app/src/androidTest/java/com/huanban/ar/NativeIntegrationTest.kt:425:138 'getter for defaultDisplay: Display!' is deprecated. Deprecated in Java
+
+> Task :app:compileDebugAndroidTestJavaWithJavac
+> Task :app:dexBuilderDebugAndroidTest
+> Task :app:mergeDebugAndroidTestGlobalSynthetics
+> Task :app:processDebugAndroidTestJavaRes
+> Task :app:mergeDebugAndroidTestJavaResource
+> Task :app:mergeProjectDexDebugAndroidTest
+> Task :app:packageDebugAndroidTest
+> Task :app:createDebugAndroidTestApkListingFileRedirect
+> Task :app:assembleDebugAndroidTest
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1793206850161.json
+
+BUILD SUCCESSFUL in 5m 41s
+82 actionable tasks: 82 executed

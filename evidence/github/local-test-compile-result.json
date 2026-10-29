@@ -1,0 +1,11 @@
+{
+  "exit_code": 0,
+  "seconds": 92.4,
+  "command": [
+    "bash",
+    "../tools/gradle-8.9/bin/gradle",
+    "--no-daemon",
+    "--max-workers=2",
+    "compileDebugAndroidTestKotlin"
+  ]
+}

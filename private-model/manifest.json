@@ -1,0 +1,106 @@
+{
+  "bytes": 10360742,
+  "sha256": "238035bd3400a6e1a530dd2854215975c10dc767290dba57e3301ee550ff3d0c",
+  "parts": [
+    {
+      "name": "user-default.7z.part000",
+      "bytes": 524286,
+      "git_sha": "b443c792fdfe51b24aae35f4c1994380469e235c"
+    },
+    {
+      "name": "user-default.7z.part001",
+      "bytes": 524286,
+      "git_sha": "e0bf50b40cb0fcfd10380ba698a9bc7b6d739e41"
+    },
+    {
+      "name": "user-default.7z.part002",
+      "bytes": 524286,
+      "git_sha": "96c39904e107625588bd55e58459ac81598e93ab"
+    },
+    {
+      "name": "user-default.7z.part003",
+      "bytes": 524286,
+      "git_sha": "ccb9925daae86241a84547492f8c16ca37948487"
+    },
+    {
+      "name": "user-default.7z.part004",
+      "bytes": 524286,
+      "git_sha": "fc4eac53fe3eececcaf82741ad26a5944d2aef9b"
+    },
+    {
+      "name": "user-default.7z.part005",
+      "bytes": 524286,
+      "git_sha": "14c7dcbb6461c6e1f08524189922ff4cca3424a0"
+    },
+    {
+      "name": "user-default.7z.part006",
+      "bytes": 524286,
+      "git_sha": "bb07d2b656c10c49428b12c9cd0aee50b960fb9f"
+    },
+    {
+      "name": "user-default.7z.part007",
+      "bytes": 524286,
+      "git_sha": "d8c7cc7327bff3250f30a3b856977318f8766c90"
+    },
+    {
+      "name": "user-default.7z.part008",
+      "bytes": 524286,
+      "git_sha": "f4499ddf51a004a6521286134202d415f14df4d3"
+    },
+    {
+      "name": "user-default.7z.part009",
+      "bytes": 524286,
+      "git_sha": "c8e974fb319489aaac23e2a0e1bf96c47caea9cf"
+    },
+    {
+      "name": "user-default.7z.part010",
+      "bytes": 524286,
+      "git_sha": "6b3c378f1582d4cdb2ddca8484eb80c36c4aba3f"
+    },
+    {
+      "name": "user-default.7z.part011",
+      "bytes": 524286,
+      "git_sha": "cf668d297c90ce0b0ac783a8fbd785710ed2916b"
+    },
+    {
+      "name": "user-default.7z.part012",
+      "bytes": 524286,
+      "git_sha": "d9b4143da1b64ea486f4fe1075b8ac74d19254be"
+    },
+    {
+      "name": "user-default.7z.part013",
+      "bytes": 524286,
+      "git_sha": "792bb0bdd946d1d8931fccfed89d2a4775e8bf57"
+    },
+    {
+      "name": "user-default.7z.part014",
+      "bytes": 524286,
+      "git_sha": "eb1e6010dbb63aa965a2d9bab088d63bf9cc07cd"
+    },
+    {
+      "name": "user-default.7z.part015",
+      "bytes": 524286,
+      "git_sha": "e0c06f2db488c44cdfa48a94049c9d1fd7ebd2de"
+    },
+    {
+      "name": "user-default.7z.part016",
+      "bytes": 524286,
+      "git_sha": "3a9209d7c23271194e2d5fc28551e73c15196dd8"
+    },
+    {
+      "name": "user-default.7z.part017",
+      "bytes": 524286,
+      "git_sha": "ab55b69ba8aa8244e99e262578b6fa1715b13890"
+    },
+    {
+      "name": "user-default.7z.part018",
+      "bytes": 524286,
+      "git_sha": "9a195f80caf49afee33a474f7dae73da7d610b51"
+    },
+    {
+      "name": "user-default.7z.part019",
+      "bytes": 399308,
+      "git_sha": "a593158bb08e457c83348863d935c5f4b73c6636"
+    }
+  ]
+}

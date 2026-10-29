@@ -1,0 +1,13 @@
+{
+  "run": 40727720925,
+  "commit": "9e06f1bada855b957bf620e8400caa7bb48dfeec",
+  "jvmTests": 40,
+  "jvmFailures": 0,
+  "android30UI": "13/14, video fullscreen size mismatch",
+  "android35UI": "13/14, display/source snapshots read in reverse order",
+  "android30Native": "9/9",
+  "android35Native": "9/9",
+  "followupCommit": "739c89ef7596e4a771a06c7b2ccb5ef7f3dcaf17",
+  "followupRun": 40731275880,
+  "modelUpload": "10/20 chunks; blocked by automatic approval; no model reference committed"
+}
