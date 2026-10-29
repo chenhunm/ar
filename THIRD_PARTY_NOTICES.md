@@ -1,6 +1,6 @@
 # 第三方组件
 
-本项目的原创源码使用 MIT（见 LICENSE），内置模型 CC0（见 assets/models/LICENSE.txt）。
+本项目的原创源码使用 MIT（见 LICENSE），两种原创人物及地面资源CC0（见 assets/models/LICENSE.txt）；用户提供的自用默认模型保留原始授权，不适用CC0。
 
 | 组件 | 固定版本 | 上游 | 许可 |
 |---|---|---|---|
@@ -26,4 +26,4 @@
 - XZ for Java 1.10: public domain, https://tukaani.org/xz/java.html .
 - Legacy PMD and XPS readers are implemented in this project from their data layouts; no Blender add-on implementation is bundled.
 
-User-provided optional model archives are not covered by this project's MIT or CC0 licenses. Preserve their author and license metadata. The optional personal-build asset is excluded from the Git repository and must not be redistributed without the rights holder's permission.
+User-provided optional model archives are not covered by this project's MIT or CC0 licenses. Preserve their author and license metadata. The user-provided archive is stored in chunks in the user's private repository as instructed and reassembled during preBuild. Its original author and usage metadata are preserved; it is not an MIT/CC0 project asset.
