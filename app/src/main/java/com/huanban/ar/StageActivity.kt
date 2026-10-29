@@ -106,7 +106,6 @@ class StageActivity : ComponentActivity() {
             maxLines=2
             contentDescription="camera-status"
         }
-        if(mode=="ar")root.addView(cameraStatus)
         canvas = FrameLayout(this).apply { setBackgroundColor(Color.rgb(31, 43, 58)) }
         content = LinearLayout(this)
         root.addView(content, LinearLayout.LayoutParams(-1, 0, 1f))
@@ -123,6 +122,7 @@ class StageActivity : ComponentActivity() {
                     Ui.dp(this@StageActivity, 4),
                 )
             }
+        if(mode=="ar")controls.addView(cameraStatus)
         controlScroll = Ui.scroll(this, controls)
         content.addView(controlScroll)
         arrangeForOrientation()
