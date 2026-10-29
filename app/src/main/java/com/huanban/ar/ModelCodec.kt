@@ -12,6 +12,22 @@ import org.json.JSONObject
 object ModelCodec {
     const val MAX_BYTES = 64 * 1024 * 1024
 
+    // VRM 0.x faces -Z; VRM 1.0 faces +Z in glTF coordinates.
+    // Apply a viewer rotation rather than editing vertices, skins or animation tracks.
+    // https://vrm.dev/api/coordinate/
+    fun defaultViewYaw(bytes: ByteArray): Float {
+        // Persisted roles are GLB. Read just the JSON chunk so a large skin/texture
+        // buffer is not copied again while allocating the renderer's direct buffer.
+        require(bytes.size >= 20)
+        val header = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
+        require(header.int == 0x46546c67 && header.int == 2 && header.int == bytes.size)
+        val length = header.int
+        require(header.int == 0x4e4f534a && length >= 0 && length % 4 == 0 && 20L + length <= bytes.size)
+        val extensions = JSONObject(String(bytes, 20, length, Charsets.UTF_8))
+            .optJSONObject("extensions") ?: return 0f
+        return if (extensions.has("VRM") && !extensions.has("VRMC_vrm")) 180f else 0f
+    }
+
     data class Result(
         val bytes: ByteArray,
         val animations: List<String>,

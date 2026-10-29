@@ -38,7 +38,7 @@ with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
     for p in sorted(root.rglob('*')):
         if not p.is_file():continue
         relative=p.relative_to(root)
-        if any(part in ('.gradle','build','.git','__pycache__') for part in relative.parts) or relative.name=='local.properties':continue
+        if any(part in ('.gradle','build','.git','__pycache__','.native-deps','.cxx','signing') for part in relative.parts) or relative.name=='local.properties' or p.suffix.lower() in ('.jks','.keystore'):continue
         z.write(p,'HuanBanAR/'+str(relative))
 with zipfile.ZipFile(archive) as z:assert z.testzip() is None
 print(json.dumps({'apk':str(out/name),'bytes':apk.stat().st_size,'version':version,'sha256':sha,'unit_tests':unit_count,'source':str(archive),'source_bytes':archive.stat().st_size,'report':str(out/'HuanBanAR-validation.md')},ensure_ascii=False))

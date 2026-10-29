@@ -90,6 +90,7 @@ class RenderHost(
     var looping = true
     var speed = 1f
     var yaw = 0f
+    private var modelForwardYaw = 0f
     var zoom = 1f
     private var x = 0f
     private var y = 0f
@@ -187,14 +188,15 @@ class RenderHost(
             val result = runCatching {
                 val bytes = ModelCodec.forRenderer(RoleStore(context).file(r).readBytes())
                 require(bytes.size <= ModelCodec.MAX_BYTES + 2 * 1024 * 1024)
+                val forwardYaw = ModelCodec.defaultViewYaw(bytes)
                 val direct = ByteBuffer.allocateDirect(bytes.size)
                 direct.put(bytes).flip()
-                direct
+                direct to forwardYaw
             }
             android.os.Handler(android.os.Looper.getMainLooper()).post {
                 if (disposed || ticket != generation) return@post
                 try {
-                    val buffer = result.getOrThrow()
+                    val (buffer, forwardYaw) = result.getOrThrow()
                     // Release the previous model before allocating GPU resources for the next one.
                     clearModel()
                     val model = view.modelLoader.createModelInstance(buffer)
@@ -211,6 +213,7 @@ class RenderHost(
                                 view.addChildNode(n)
                             }
                     zoom = r.scale
+                    modelForwardYaw = forwardYaw
                     yaw = 0f
                     x = 0f
                     y = 0f
@@ -270,9 +273,10 @@ class RenderHost(
         node?.let { n ->
             val base = if (ar) .6f else 1.8f
             n.scaleToUnitCube(base * zoom.coerceIn(.1f, 3f))
-            n.rotation = Rotation(0f, yaw, 0f)
+            val displayYaw = yaw + modelForwardYaw
+            n.rotation = Rotation(0f, displayYaw, 0f)
             val c = n.center
-            val angle = Math.toRadians(yaw.toDouble())
+            val angle = Math.toRadians(displayYaw.toDouble())
             val cx = c.x * n.scale.x
             val cz = c.z * n.scale.z
             n.position =

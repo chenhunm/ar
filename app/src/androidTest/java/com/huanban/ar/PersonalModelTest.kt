@@ -38,31 +38,37 @@ class PersonalModelTest {
         waitFor("模型表面") { host.node!=null && host.view.width>0 && host.view.height>0 }
         assertTrue("用户骨骼动作缺失",host.node!!.animationCount>=7)
         val end=SystemClock.elapsedRealtime()+60000
-        var visible=0;var chromatic=0;var clear=0
+        var visible=0;var chromatic=0;var clear=0;var facePixels=0
         do {
             val image=Bitmap.createBitmap(host.view.width,host.view.height,Bitmap.Config.ARGB_8888)
             val done=CountDownLatch(1);var code=-1
             ins.runOnMainSync{FrameCapture.copy(host.view,image,{code=it;done.countDown()})}
             try {
                 assertTrue(done.await(45,TimeUnit.SECONDS));assertEquals(android.view.PixelCopy.SUCCESS,code)
-                visible=0;chromatic=0;clear=0
+                visible=0;chromatic=0;clear=0;facePixels=0
                 for(y in 0 until image.height step 2)for(x in 0 until image.width step 2) {
                     val c=image.getPixel(x,y)
                     if(Color.alpha(c)==0) clear++
                     if(Color.alpha(c)>200 && maxOf(Color.red(c),Color.green(c),Color.blue(c))>35) {
                         visible++
                         if(maxOf(Color.red(c),Color.green(c),Color.blue(c))-minOf(Color.red(c),Color.green(c),Color.blue(c))>20) chromatic++
+                        // This supplied avatar has blue back hair. Visible warm face
+                        // pixels in the upper half catch a model facing away even
+                        // when geometry/material presence assertions pass.
+                        if(y<image.height/2 && Color.red(c)>150 && Color.green(c)>80 &&
+                            Color.red(c)>Color.green(c)*1.05f && Color.red(c)>Color.blue(c)*1.1f) facePixels++
                     }
                 }
                 File(context.filesDir,name+".png").outputStream().use{image.compress(Bitmap.CompressFormat.PNG,100,it)}
             } finally {image.recycle()}
-            if(visible>200 && chromatic>50)break
+            if(visible>200 && chromatic>50 && facePixels>20)break
             Thread.sleep(250)
         } while(SystemClock.elapsedRealtime()<end)
         assertTrue("用户角色没有可见网格像素："+visible,visible>200)
         assertTrue("用户角色没有彩色材质像素："+chromatic,chromatic>50)
+        assertTrue("默认朝向未露出角色面部："+facePixels,facePixels>20)
         if(transparent)assertTrue("用户桌宠背景不透明",clear>50)
-        File(context.filesDir,"qa-user-model.txt").appendText(name+" role="+host.role!!.id+" animations="+host.node!!.animationCount+" visible="+visible+" chromatic="+chromatic+" transparent="+clear+" API="+android.os.Build.VERSION.SDK_INT+"; emulator, not Redmi K80\n")
+        File(context.filesDir,"qa-user-model.txt").appendText(name+" role="+host.role!!.id+" animations="+host.node!!.animationCount+" visible="+visible+" chromatic="+chromatic+" facePixels="+facePixels+" transparent="+clear+" API="+android.os.Build.VERSION.SDK_INT+"; emulator, not Redmi K80\n")
     }
     private fun stage(mode:String,roleId:String) {
         val activity=ins.startActivitySync(Intent(context,StageActivity::class.java).putExtra("mode",mode).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as StageActivity
