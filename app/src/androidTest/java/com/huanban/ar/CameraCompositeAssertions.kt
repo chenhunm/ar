@@ -52,6 +52,27 @@ object CameraCompositeAssertions {
 
     private data class Sources(val model: Bitmap, val background: Bitmap, val location: IntArray)
 
+    private fun measure(image: Bitmap, source: Sources): Result {
+        val (model, background, location) = source
+        var candidates=0;var matches=0;var skin=0;var skinMatches=0
+        fun near(a:Int,b:Int) = kotlin.math.abs(Color.red(a)-Color.red(b))<40 &&
+            kotlin.math.abs(Color.green(a)-Color.green(b))<40 && kotlin.math.abs(Color.blue(a)-Color.blue(b))<40
+        for(y in 8 until model.height-8 step 4) for(x in 8 until model.width-8 step 4) {
+            val sx=x+location[0];val sy=y+location[1]
+            if(sx !in 0 until image.width || sy !in 0 until image.height)continue
+            val m=model.getPixel(x,y)
+            val c=background.getPixel(x*background.width/model.width,y*background.height/model.height)
+            val displayed=image.getPixel(sx,sy)
+            if(Color.alpha(m)==0 && maxOf(Color.red(c),Color.green(c),Color.blue(c))>100) {
+                candidates++;if(near(c,displayed))matches++
+            }
+            if(Color.alpha(m)>250 && Color.red(m)>40 && Color.red(m)>Color.green(m)+2 && Color.green(m)>Color.blue(m)+5) {
+                skin++;if(near(m,displayed))skinMatches++
+            }
+        }
+        return Result(candidates,matches,skin,skinMatches)
+    }
+
     private fun sources(activity: StageActivity): Sources {
         val host = field(activity, "host") as RenderHost
         val location = IntArray(2)
@@ -61,27 +82,83 @@ object CameraCompositeAssertions {
             camera = (field(activity, "camera") as CameraBackdrop).capturePreview()
         }
         val background = camera ?: error("相机像素缺失")
-        val model = Bitmap.createBitmap(host.view.width, host.view.height, Bitmap.Config.ARGB_8888)
-        val done = CountDownLatch(1)
-        var result = -1
-        ins.runOnMainSync { FrameCapture.copy(host.view, model, { result = it; done.countDown() }) }
+        val started = SystemClock.elapsedRealtime()
+        val deadline = started + 30000
+        var attempts = 0
         try {
-            assertTrue("三维画面读取超时", done.await(45, TimeUnit.SECONDS))
-            assertEquals(PixelCopy.SUCCESS, result)
-            return Sources(model, background, location)
-        } catch (error: Throwable) { model.recycle(); background.recycle(); throw error }
+            while (true) {
+                val model = Bitmap.createBitmap(host.view.width, host.view.height, Bitmap.Config.ARGB_8888)
+                var ready = false
+                try {
+                    val done = CountDownLatch(1)
+                    var result = -1
+                    ins.runOnMainSync {
+                        host.view.getLocationOnScreen(location)
+                        FrameCapture.copy(host.view, model, { result = it; done.countDown() })
+                    }
+                    assertTrue("三维画面读取超时", done.await(
+                        (deadline-SystemClock.elapsedRealtime()).coerceAtLeast(1), TimeUnit.MILLISECONDS))
+                    assertEquals(PixelCopy.SUCCESS, result)
+                    // After the system recording dialog, SUCCESS can describe a
+                    // transparent buffer queued during Activity pause/resume.
+                    // Require the same skin samples used by compare(), rather
+                    // than accepting an empty input layer as a composition test.
+                    var skin = 0
+                    for (y in 8 until model.height-8 step 4) for (x in 8 until model.width-8 step 4) {
+                        val c = model.getPixel(x,y)
+                        if (Color.alpha(c)>250 && Color.red(c)>40 &&
+                            Color.red(c)>Color.green(c)+2 && Color.green(c)>Color.blue(c)+5) skin++
+                    }
+                    attempts++
+                    File(activity.filesDir,"qa-composite-source-timing.txt").appendText(
+                        "attempt=$attempts elapsed_ms=${SystemClock.elapsedRealtime()-started} skin=$skin\n")
+                    if (skin>20) {
+                        ready = true
+                        return Sources(model,background,location)
+                    }
+                    if (attempts==1) File(activity.filesDir,"qa-composite-empty-model.png").outputStream().use {
+                        model.compress(Bitmap.CompressFormat.PNG,100,it)
+                    }
+                    assertTrue("三维源图没有人物像素：$skin（等待上限30秒）",SystemClock.elapsedRealtime()<deadline)
+                } finally { if (!ready) model.recycle() }
+                Thread.sleep(200)
+            }
+        } catch (error: Throwable) { background.recycle(); throw error }
     }
 
     fun screen(activity: StageActivity, name: String, expectCamera: Boolean = true): Result {
         // Read the queued 3D buffer first. A screenshot taken before PixelCopy
         // can precede the first model frame after the system permission dialog.
         val source = sources(activity)
-        val screenshot = ins.uiAutomation.takeScreenshot()
-        if (screenshot == null) {
-            source.model.recycle(); source.background.recycle(); error("无法读取最终显示画面")
+        val started=SystemClock.elapsedRealtime()
+        val deadline=started+30000
+        var attempts=0
+        var consumed=false
+        try {
+            while(true) {
+                val screenshot=ins.uiAutomation.takeScreenshot() ?: error("无法读取最终显示画面")
+                try {
+                    val measured=measure(screenshot,source)
+                    attempts++
+                    File(activity.filesDir,"qa-composite-display-timing.txt").appendText(
+                        "$name attempt=$attempts elapsed_ms=${SystemClock.elapsedRealtime()-started} $measured\n")
+                    val visible=measured.background>100 && measured.skin>20 && measured.skinRatio>.70f &&
+                        (if(expectCamera)measured.backgroundRatio>.80f else measured.backgroundRatio<.10f)
+                    if(visible || SystemClock.elapsedRealtime()>=deadline) {
+                        // compare() retains every original assertion and saves the
+                        // final display and both input buffers, including failures.
+                        consumed=true
+                        return compare(activity,screenshot,name,expectCamera,source)
+                    }
+                    if(attempts==1) File(activity.filesDir,"pending-$name.png").outputStream().use {
+                        screenshot.compress(Bitmap.CompressFormat.PNG,100,it)
+                    }
+                } finally {screenshot.recycle()}
+                Thread.sleep(200)
+            }
+        } finally {
+            if(!consumed) {source.model.recycle();source.background.recycle()}
         }
-        try { return compare(activity, screenshot, name, expectCamera, source) }
-        finally { screenshot.recycle() }
     }
 
     fun frame(activity: StageActivity, image: Bitmap, name: String, expectCamera: Boolean = true): Result =
@@ -95,39 +172,14 @@ object CameraCompositeAssertions {
                 .maximumWindowMetrics.bounds
             assertEquals("视频/截图应保持显示器宽度", bounds.width(), image.width)
             assertEquals("视频/截图应保持显示器高度，不能误用应用可用区域", bounds.height(), image.height)
-            var candidates = 0
-            var matches = 0
-            var skin = 0
-            var skinMatches = 0
-            fun near(a: Int, b: Int) =
-                kotlin.math.abs(Color.red(a) - Color.red(b)) < 40 &&
-                    kotlin.math.abs(Color.green(a) - Color.green(b)) < 40 &&
-                    kotlin.math.abs(Color.blue(a) - Color.blue(b)) < 40
-            for (y in 8 until model.height - 8 step 4) for (x in 8 until model.width - 8 step 4) {
-                val sx = x + location[0]
-                val sy = y + location[1]
-                if (sx !in 0 until image.width || sy !in 0 until image.height) continue
-                val m = model.getPixel(x, y)
-                val c = background.getPixel(x * background.width / model.width, y * background.height / model.height)
-                val displayed = image.getPixel(sx, sy)
-                if (Color.alpha(m) == 0 && maxOf(Color.red(c), Color.green(c), Color.blue(c)) > 100) {
-                    candidates++
-                    if (near(c, displayed)) matches++
-                }
-                if (Color.alpha(m) > 250 && Color.red(m) > 40 &&
-                    Color.red(m) > Color.green(m) + 2 && Color.green(m) > Color.blue(m) + 5) {
-                    skin++
-                    if (near(m, displayed)) skinMatches++
-                }
-            }
-            val measured = Result(candidates, matches, skin, skinMatches)
+            val measured = measure(image,source)
             val dir = activity.filesDir
             File(dir, "$name.png").outputStream().use { image.compress(Bitmap.CompressFormat.PNG, 100, it) }
             File(dir, "$name-camera.png").outputStream().use { background.compress(Bitmap.CompressFormat.PNG, 100, it) }
             File(dir, "$name-model.png").outputStream().use { model.compress(Bitmap.CompressFormat.PNG, 100, it) }
             File(dir, "qa-camera-composition.txt").appendText("$name API=${android.os.Build.VERSION.SDK_INT} $measured backgroundRatio=${measured.backgroundRatio} skinRatio=${measured.skinRatio}\n")
-            assertTrue("相机必须提供足量明亮样本，不能让全黑帧通过", candidates > 100)
-            assertTrue("最终合成画面必须保留三维人物：$measured", skin > 20 && measured.skinRatio > .70f)
+            assertTrue("相机必须提供足量明亮样本，不能让全黑帧通过", measured.background > 100)
+            assertTrue("最终合成画面必须保留三维人物：$measured", measured.skin > 20 && measured.skinRatio > .70f)
             if (expectCamera)
                 assertTrue("最终画面缺少相机背景：$measured", measured.backgroundRatio > .80f)
             else
