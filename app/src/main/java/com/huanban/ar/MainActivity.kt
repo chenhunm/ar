@@ -139,7 +139,8 @@ class MainActivity : ComponentActivity() {
         col.addView(Ui.card(this, "角色管理", "内置角色与 GLB / GLTF / VRM 导入、预览和编辑") { roles() })
         col.addView(Ui.card(this, "人物对话", "文字、语音输入与朗读 · 本地规则 / 自选 AI 接口") { chat() })
         col.addView(Ui.secondary(this, "应用设置") { settings() })
-        col.addView(Ui.text(this, "内置模型离线可用 · 无广告 · 无需账号", 12f, Ui.muted))
+        val version=packageManager.getPackageInfo(packageName,0).versionName
+        col.addView(Ui.text(this, "v$version · 内置模型离线可用 · 无广告 · 无需账号", 12f, Ui.muted))
     }
 
     private fun stage(mode: String) {

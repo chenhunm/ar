@@ -56,9 +56,10 @@ jobs:
       matrix:
         include:
           - {api: 30, target: default, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
-          - {api: 30, target: default, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest", expected: 10}
+          - {api: 30, target: default, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest,com.huanban.ar.DeviceCompatibilityTest", expected: 13}
           - {api: 35, target: google_apis, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
-          - {api: 35, target: google_apis, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest", expected: 10}
+          - {api: 35, target: google_apis, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest,com.huanban.ar.DeviceCompatibilityTest", expected: 13}
+          - {api: 36, target: google_apis, suite: compat, test_class: "com.huanban.ar.PersonalModelTest,com.huanban.ar.DeviceCompatibilityTest", expected: 4}
     name: Android ${{ matrix.api }} / ${{ matrix.suite }}
     steps:
       - uses: actions/checkout@v4

@@ -82,7 +82,7 @@ class RoleStore(val context: Context) {
         val revisions=mutableMapOf<String,String>()
         val builtins = mutableListOf(Triple("qing","青禾 · 人形","qing.glb"), Triple("momo","团子 · Q版","momo.glb"))
         if (context.assets.list("models")?.contains("user-default.7z") == true)
-            builtins += Triple("user-default", "自定义默认角色", "user-default.7z")
+            builtins += Triple("user-default", "蓝色大肥鱼 · 默认角色", "user-default.7z")
         for((id,name,asset) in builtins) {
             val bytes=context.assets.open("models/$asset").use{it.readBytes()}
             val revision=java.security.MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)}
@@ -108,13 +108,29 @@ class RoleStore(val context: Context) {
             }
             revisions[key]=revision
         }
+        val supplied=list.indexOfFirst { it.id=="user-default" }
+        if(supplied>=0 && list[supplied].name=="自定义默认角色")
+            list[supplied]=list[supplied].copy(name="蓝色大肥鱼 · 默认角色")
         write(list)
-        val edit=prefs.edit();for((key,value)in revisions)edit.putString(key,value);edit.apply()
+        val edit=prefs.edit()
+        for((key,value)in revisions)edit.putString(key,value)
+        // Adopt the supplied avatar once on fresh installs and upgrades from the
+        // original geometric defaults. Later explicit user choices are retained.
+        if(supplied>=0 && !prefs.getBoolean("suppliedAvatarDefault.v1",false)) {
+            val ids=list.map { it.id }.toSet()
+            for(key in listOf("role","arRole")) {
+                val old=prefs.getString(key,null)
+                if(old !in ids || old in setOf("qing","momo"))edit.putString(key,"user-default")
+            }
+            edit.putBoolean("suppliedAvatarDefault.v1",true)
+        }
+        edit.apply()
     }
 
     fun selected(): Role? {
         val list = roles()
-        return list.find { it.id == prefs.getString("role", "qing") } ?: list.firstOrNull()
+        return list.find { it.id == prefs.getString("role", null) }
+            ?: list.find { it.id=="user-default" } ?: list.firstOrNull()
     }
 
     fun arSelected(): Role? {

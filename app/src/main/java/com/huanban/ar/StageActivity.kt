@@ -29,6 +29,7 @@ class StageActivity : ComponentActivity() {
     private lateinit var content: LinearLayout
     private lateinit var controlScroll: ScrollView
     private lateinit var status: TextView
+    private lateinit var cameraStatus: TextView
     private var host: RenderHost? = null
     private var camera: CameraBackdrop? = null
     private var cameraTexture: TextureView? = null
@@ -61,7 +62,7 @@ class StageActivity : ComponentActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { ok ->
             if (ok) setupCameraMode()
             else {
-                status.text = "摄像头权限未授予"
+                cameraStatus.text = "摄像头权限未授予，可点“相机权限”开启"
                 Ui.toast(this, "摄像头权限被拒绝，请在系统权限页开启")
             }
         }
@@ -101,6 +102,11 @@ class StageActivity : ComponentActivity() {
                 ),
             )
         root.addView(header)
+        cameraStatus=Ui.text(this,"准备连接摄像头…",12f,Ui.muted).apply {
+            maxLines=2
+            contentDescription="camera-status"
+        }
+        if(mode=="ar")root.addView(cameraStatus)
         canvas = FrameLayout(this).apply { setBackgroundColor(Color.rgb(31, 43, 58)) }
         content = LinearLayout(this)
         root.addView(content, LinearLayout.LayoutParams(-1, 0, 1f))
@@ -204,9 +210,30 @@ class StageActivity : ComponentActivity() {
                 },
             )
         )
-        if (mode == "ar")
+        if (mode == "ar") {
+            controls.addView(Ui.row(this,
+                Ui.secondary(this,"重试相机") {
+                    if(checkSelfPermission(Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED)
+                        cameraPermission.launch(Manifest.permission.CAMERA)
+                    else if(camera!=null)camera?.restart()
+                    else {fallback=true;setup(false)}
+                },
+                Ui.secondary(this,"相机权限") {
+                    val version=packageManager.getPackageInfo(packageName,0).versionName
+                    val info="幻伴 AR $version\n"+(camera?.diagnostics() ?: cameraStatus.text.toString())
+                    AlertDialog.Builder(this).setTitle("相机状态").setMessage(info)
+                        .setPositiveButton("应用权限") {_,_->
+                            startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                android.net.Uri.parse("package:$packageName")))
+                        }
+                        .setNeutralButton("复制诊断") {_,_->
+                            getSystemService(android.content.ClipboardManager::class.java)
+                                .setPrimaryClip(android.content.ClipData.newPlainText("相机诊断",info))
+                            Ui.toast(this,"相机诊断已复制")
+                        }.setNegativeButton("关闭",null).show()
+                }))
             controls.addView(Ui.text(this, "叠加：单指移动，双指缩放；追踪：点击已检测平面放置/重新放置。", 12f, Ui.muted))
-        else controls.addView(Ui.text(this, "单指拖动调整视角 · 双指缩放 · 轻触互动", 12f, Ui.muted))
+        } else controls.addView(Ui.text(this, "单指拖动调整视角 · 双指缩放 · 轻触互动", 12f, Ui.muted))
     }
 
     private fun arrangeForOrientation() {
@@ -225,14 +252,10 @@ class StageActivity : ComponentActivity() {
     }
 
     private fun setupCameraMode() {
-        val availability =
-            runCatching { ArCoreApk.getInstance().checkAvailability(this) }.getOrNull()
-        if (availability == ArCoreApk.Availability.SUPPORTED_INSTALLED) setup(true)
-        else {
-            fallback = true
-            setup(false)
-            status.text = "摄像头叠加模式（无空间锚定）\nARCore 未安装、不可用或尚未确认支持；可在“追踪 / 叠加”中重新检查。"
-        }
+        // Opening the ordinary camera must not depend on an installed-but-
+        // unusable ARCore service. Real tracking remains an explicit option.
+        fallback = true
+        setup(false)
     }
 
     private fun chooseAr() {
@@ -278,7 +301,7 @@ class StageActivity : ComponentActivity() {
             cameraTexture =
                 TextureView(this).also {
                     canvas.addView(it, FrameLayout.LayoutParams(-1, -1))
-                    camera = CameraBackdrop(this, it) { s -> status.text = s }
+                    camera = CameraBackdrop(this, it) { s -> cameraStatus.text = s }
                 }
         }
         try {
@@ -311,7 +334,11 @@ class StageActivity : ComponentActivity() {
                         }
                     }
                 }
-                ar.onSessionUpdated = { _, f -> frame = f }
+                cameraStatus.text="正在启动 ARCore 空间追踪…"
+                ar.onSessionUpdated = { _, f ->
+                    frame = f
+                    if(cameraStatus.text.toString()!="ARCore 空间追踪已开启")cameraStatus.text="ARCore 空间追踪已开启"
+                }
             }
             gestures(h, realAr)
             val role = (if (mode == "ar") store.arSelected() else store.selected()) ?: error("角色库为空")
