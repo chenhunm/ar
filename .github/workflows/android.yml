@@ -35,6 +35,10 @@ jobs:
           df -h .
       - name: Install compile SDK and NDK
         run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
+      - name: Prepare exportable debug signing identity
+        run: |
+          mkdir -p signing
+          keytool -genkeypair -keystore signing/huanban-debug.keystore -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=HuanBanAR,C=CN" > /dev/null 2>&1
       - name: Lint, JVM tests and APK builds
         run: set -o pipefail; ./gradlew --no-daemon --max-workers=2 lintDebug testDebugUnitTest assembleDebug assembleDebugAndroidTest 2>&1 | tee build.log
       - name: Encrypt authorized debug signing backup

@@ -14,7 +14,8 @@ import subprocess
 
 
 def export(keystore, apk, recipient, output):
-    assert keystore.is_file() and apk.is_file() and recipient.is_file()
+    for label, path in [('signing keystore', keystore), ('APK', apk), ('recipient certificate', recipient)]:
+        assert path.is_file(), f'Missing {label}: {path}'
     output.mkdir(parents=True, exist_ok=True, mode=0o700)
     encrypted = output / 'debug.keystore.p7m'
     subprocess.run(['openssl', 'cms', '-encrypt', '-binary', '-aes-256-cbc',
