@@ -61,35 +61,45 @@ class NativeIntegrationTest {
 
     private fun capture(host: RenderHost, name: String): Bitmap {
         waitFor("Surface 尺寸") { host.view.width > 0 && host.view.height > 0 }
-        val b = Bitmap.createBitmap(host.view.width, host.view.height, Bitmap.Config.ARGB_8888)
-        val latch = CountDownLatch(1)
-        var result = -1
-        ins.runOnMainSync {
-            FrameCapture.copy(
-                host.view,
-                b,
-                {
-                    result = it
-                    latch.countDown()
-                },
+        // A loaded ModelNode and a successful PixelCopy can still refer to the
+        // floor-only buffer queued before GPU model resources reached a frame.
+        // Wait for the same skin assertion, with a hard deadline and raw evidence.
+        val started = SystemClock.elapsedRealtime()
+        val deadline = started + 30000
+        var attempts = 0
+        while (true) {
+            val b = Bitmap.createBitmap(host.view.width, host.view.height, Bitmap.Config.ARGB_8888)
+            val latch = CountDownLatch(1)
+            var result = -1
+            ins.runOnMainSync {
+                FrameCapture.copy(host.view, b, { result = it; latch.countDown() })
+            }
+            assertTrue("PixelCopy 超时", latch.await(45, TimeUnit.SECONDS))
+            if(result!=PixelCopy.SUCCESS)device.takeScreenshot(File(context.filesDir,"failure-"+name))
+            assertEquals(PixelCopy.SUCCESS, result)
+            File(context.filesDir, name).outputStream().use {
+                b.compress(Bitmap.CompressFormat.PNG, 100, it)
+            }
+            var skin = 0
+            for (y in 0 until b.height step 2) for (x in 0 until b.width step 2) {
+                val c = b.getPixel(x, y)
+                val r = android.graphics.Color.red(c)
+                val g = android.graphics.Color.green(c)
+                val blue = android.graphics.Color.blue(c)
+                if (r > 40 && r > g + 2 && g > blue + 5) skin++
+            }
+            attempts++
+            File(context.filesDir, "qa-capture-timing.txt").appendText(
+                "$name attempt=$attempts elapsed_ms=${SystemClock.elapsedRealtime()-started} skin=$skin\n"
             )
+            if (skin > 20) return b
+            if (attempts == 1) File(context.filesDir, "pending-"+name).outputStream().use {
+                b.compress(Bitmap.CompressFormat.PNG, 100, it)
+            }
+            b.recycle()
+            assertTrue("未检测到真实人物皮肤网格像素：$skin（等待上限30秒）", SystemClock.elapsedRealtime() < deadline)
+            Thread.sleep(200)
         }
-        assertTrue("PixelCopy 超时", latch.await(45, TimeUnit.SECONDS))
-        if(result!=PixelCopy.SUCCESS)device.takeScreenshot(File(context.filesDir,"failure-"+name))
-        assertEquals(PixelCopy.SUCCESS, result)
-        File(context.filesDir, name).outputStream().use {
-            b.compress(Bitmap.CompressFormat.PNG, 100, it)
-        }
-        var skin = 0
-        for (y in 0 until b.height step 2) for (x in 0 until b.width step 2) {
-            val c = b.getPixel(x, y)
-            val r = android.graphics.Color.red(c)
-            val g = android.graphics.Color.green(c)
-            val blue = android.graphics.Color.blue(c)
-            if (r > 40 && r > g + 2 && g > blue + 5) skin++
-        }
-        assertTrue("未检测到真实人物皮肤网格像素：$skin", skin > 20)
-        return b
     }
 
     @Test
