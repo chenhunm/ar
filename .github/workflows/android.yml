@@ -56,9 +56,9 @@ jobs:
       matrix:
         include:
           - {api: 30, target: default, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
-          - {api: 30, target: default, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest", expected: 9}
+          - {api: 30, target: default, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest", expected: 10}
           - {api: 35, target: google_apis, suite: ui, test_class: com.huanban.ar.AppRegressionTest, expected: 14}
-          - {api: 35, target: google_apis, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest", expected: 9}
+          - {api: 35, target: google_apis, suite: native, test_class: "com.huanban.ar.NativeIntegrationTest,com.huanban.ar.ExpandedFormatTest,com.huanban.ar.PersonalModelTest", expected: 10}
     name: Android ${{ matrix.api }} / ${{ matrix.suite }}
     steps:
       - uses: actions/checkout@v4
@@ -84,6 +84,17 @@ jobs:
           sudo rm -rf /usr/share/dotnet "$ANDROID_HOME/ndk"
           df -h .
           python3 -c 'import shutil; assert shutil.disk_usage(".").free >= 10*1024**3, "Emulator needs disk headroom"'
+      - name: Install emulator image with bounded download retries
+        timeout-minutes: 8
+        env:
+          TEST_API: ${{ matrix.api }}
+          TEST_TARGET: ${{ matrix.target }}
+        run: |
+          for attempt in 1 2 3; do
+            if sdkmanager "emulator" "system-images;android-${TEST_API};${TEST_TARGET};x86_64"; then exit 0; fi
+            echo "SDK image download attempt $attempt failed"
+          done
+          exit 1
       - uses: reactivecircus/android-emulator-runner@v2
         env:
           HUANBAN_TEST_CLASS: ${{ matrix.test_class }}

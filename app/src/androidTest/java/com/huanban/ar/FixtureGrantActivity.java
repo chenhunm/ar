@@ -10,7 +10,7 @@ public class FixtureGrantActivity extends Activity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         String authority="com.huanban.ar.test.fixtures";
-        for(String name:new String[]{"fixture.glb","fixture.vrm","fixture.gltf","mesh.bin"})
+        for(String name:new String[]{"fixture.glb","fixture.vrm","fixture.gltf","mesh.bin","user-default.7z"})
             grantUriPermission("com.huanban.ar",DocumentsContract.buildDocumentUri(authority,name),Intent.FLAG_GRANT_READ_URI_PERMISSION);
         grantUriPermission("com.huanban.ar",DocumentsContract.buildTreeDocumentUri(authority,"root"),Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
         android.util.Log.i("HuanBanFixtures","Granted fixture documents and tree");

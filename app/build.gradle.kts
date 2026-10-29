@@ -39,3 +39,11 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
 }
+
+val preparePrivateModel by tasks.registering(Exec::class) {
+    workingDir(rootProject.projectDir)
+    commandLine(System.getenv("HUANBAN_PYTHON") ?: "python3", rootProject.file("scripts/materialize_private_model.py").absolutePath)
+    inputs.dir(rootProject.file("private-model"))
+    outputs.file(layout.projectDirectory.file("src/main/assets/models/user-default.7z"))
+}
+tasks.named("preBuild") { dependsOn(preparePrivateModel) }

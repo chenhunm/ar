@@ -15,7 +15,14 @@ public class FixtureDocumentsProvider extends DocumentsProvider {
     private static final String[] FILES={"fixture.glb","fixture.gltf","fixture.vrm","mesh.bin"};
     private static final String[] COLS={Document.COLUMN_DOCUMENT_ID,Document.COLUMN_DISPLAY_NAME,Document.COLUMN_MIME_TYPE,Document.COLUMN_FLAGS,Document.COLUMN_SIZE};
     @Override public boolean onCreate(){return true;}
-    private boolean valid(String id){return Arrays.asList(FILES).contains(id);}
+    private boolean valid(String id){return id.equals("user-default.7z") || Arrays.asList(FILES).contains(id);}
+    private InputStream input(String id) throws IOException {
+        if(id.equals("user-default.7z")) {
+            try { return getContext().createPackageContext("com.huanban.ar",0).getAssets().open("models/user-default.7z"); }
+            catch(android.content.pm.PackageManager.NameNotFoundException e){throw new IOException(e);}
+        }
+        return getContext().getAssets().open("fixtures/"+id);
+    }
     @Override public Cursor queryRoots(String[] projection){
         String[] cols=projection!=null?projection:new String[]{Root.COLUMN_ROOT_ID,Root.COLUMN_DOCUMENT_ID,Root.COLUMN_TITLE,Root.COLUMN_FLAGS,Root.COLUMN_MIME_TYPES};
         MatrixCursor c=new MatrixCursor(cols);Object[] values=new Object[cols.length];
@@ -25,7 +32,7 @@ public class FixtureDocumentsProvider extends DocumentsProvider {
     private void add(MatrixCursor c,String id){
         if(!id.equals("root")&&!valid(id))throw new IllegalArgumentException("Unknown fixture");
         boolean root=id.equals("root");long size=0;
-        if(!root)try(InputStream in=getContext().getAssets().open("fixtures/"+id)){size=in.available();}catch(IOException e){throw new IllegalStateException(e);}
+        if(!root)try(InputStream in=input(id)){size=in.available();}catch(IOException e){throw new IllegalStateException(e);}
         String[] cols=c.getColumnNames();Object[] values=new Object[cols.length];
         for(int i=0;i<cols.length;i++){String k=cols[i];if(k.equals(Document.COLUMN_DOCUMENT_ID))values[i]=id;else if(k.equals(Document.COLUMN_DISPLAY_NAME))values[i]=root?"幻伴测试模型":id;else if(k.equals(Document.COLUMN_MIME_TYPE))values[i]=root?Document.MIME_TYPE_DIR:"application/octet-stream";else if(k.equals(Document.COLUMN_FLAGS))values[i]=0;else if(k.equals(Document.COLUMN_SIZE))values[i]=size;}
         c.addRow(values);
@@ -36,7 +43,7 @@ public class FixtureDocumentsProvider extends DocumentsProvider {
     @Override public ParcelFileDescriptor openDocument(String id,String mode,CancellationSignal signal) throws FileNotFoundException {
         if(!mode.equals("r")||!valid(id))throw new FileNotFoundException("Unsupported fixture");
         File f=new File(getContext().getCacheDir(),id);
-        try(InputStream in=getContext().getAssets().open("fixtures/"+id);OutputStream out=new FileOutputStream(f)){byte[] buffer=new byte[8192];int n;while((n=in.read(buffer))!=-1)out.write(buffer,0,n);}catch(IOException e){throw new FileNotFoundException(e.toString());}
+        try(InputStream in=input(id);OutputStream out=new FileOutputStream(f)){byte[] buffer=new byte[8192];int n;while((n=in.read(buffer))!=-1)out.write(buffer,0,n);}catch(IOException e){throw new FileNotFoundException(e.toString());}
         return ParcelFileDescriptor.open(f,ParcelFileDescriptor.MODE_READ_ONLY);
     }
 }
